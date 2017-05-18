@@ -4,6 +4,8 @@ namespace Drupal\bookmark\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 
 /**
  * Class BookmarksTypeForm.
@@ -11,6 +13,32 @@ use Drupal\Core\Form\FormStateInterface;
  * @package Drupal\bookmark\Form
  */
 class BookmarksTypeForm extends EntityForm {
+
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface;
+   */
+  protected $bundleInfoService;
+
+  /**
+   * Constructs a new form.
+   *
+   * @param \Drupal\flag\ActionLink\ActionLinkPluginManager $action_link_manager
+   *   The link type plugin manager.
+   */
+  public function __construct(EntityTypeBundleInfoInterface $bundle_info_service) {
+    $this->bundleInfoService = $bundle_info_service;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('entity_type.bundle.info')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -46,6 +74,30 @@ class BookmarksTypeForm extends EntityForm {
       '#description' => $this->t('The text for the "Bookmark this" link'),
       '#required' => TRUE,
     ];
+
+    $bundles = $this->bundleInfoService->getBundleInfo('node');
+    $entity_bundles = [];
+    foreach ($bundles as $bundle_id => $bundle_row) {
+      $entity_bundles[$bundle_id] = $bundle_row['label'];
+    }
+
+    $form['extras'] = [
+      '#type' => 'details',
+      '#open' => TRUE,
+      '#title' => $this->t('Extras'),
+      '#tree' => FALSE,
+      '#weight' => 10,
+    ];
+
+    $form['extras']['bundles'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Display the bookmark link on'),
+      '#options' => $entity_bundles,
+      '#default_value' => $bookmarks_type->getBundles(),
+      '#weight' => 10,
+      '#description' => $this->t('Check any content type where you want to display a link to bookmark content.'),
+    ];
+
 
     return $form;
   }

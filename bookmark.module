@@ -56,3 +56,18 @@ function bookmark_theme_suggestions_bookmarks(array $variables) {
   $suggestions[] = 'bookmarks__' . $entity->id() . '__' . $sanitized_view_mode;
   return $suggestions;
 }
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function bookmark_entity_extra_field_info() {
+  $extra['node']['article']['display']['bookmarks_' . 'test'] = [
+    'label' => t('Bookmark: %title', [
+      '%title' => 'Bookmark',
+    ]),
+    'description' => t('Bookmark link'),
+    'weight' => 10,
+  ];
+
+  return $extra;
+}

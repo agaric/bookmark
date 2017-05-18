@@ -24,4 +24,16 @@ interface BookmarksTypeInterface extends ConfigEntityInterface {
    *  Link Text.
    */
   public function setLinkText($link_text);
+
+  /**
+   * Get the bundles property.
+   */
+  public function getBundles();
+
+  /**
+   * Set the bundles property.
+   *
+   * @param array $bundles
+   */
+  public function setBundles($bundles);
 }

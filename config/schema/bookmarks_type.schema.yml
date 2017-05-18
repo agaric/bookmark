@@ -13,3 +13,8 @@ bookmark.bookmarks_type.*:
     link_text:
       type: string
       label: 'Link text'
+    bundles:
+      type: sequence
+      label: 'The entity bundles this flag applies to'
+      sequence:
+        - type: string

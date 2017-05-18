@@ -62,6 +62,15 @@ class BookmarksType extends ConfigEntityBundleBase implements BookmarksTypeInter
   protected $link_text = '';
 
   /**
+   * The bundles this bookmark applies to.
+   *
+   * This may be an empty array to indicate all bundles apply.
+   *
+   * @var array
+   */
+  protected $bundles = [];
+
+  /**
    * {@inheritdoc}
    */
   public function getLinkText() {
@@ -73,6 +82,20 @@ class BookmarksType extends ConfigEntityBundleBase implements BookmarksTypeInter
    */
   public function setLinkText($link_text) {
     $this->link_text = $link_text;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getBundles() {
+    return $this->bundles;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setBundles($bundles) {
+    $this->link_text = $bundles;
   }
 
 }
