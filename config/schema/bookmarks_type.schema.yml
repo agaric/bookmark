@@ -10,3 +10,6 @@ bookmark.bookmarks_type.*:
       label: 'Label'
     uuid:
       type: string
+    link_text:
+      type: string
+      label: 'Link text'

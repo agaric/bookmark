@@ -54,4 +54,25 @@ class BookmarksType extends ConfigEntityBundleBase implements BookmarksTypeInter
    */
   protected $label;
 
+  /**
+   * The Bookmark link text.
+   *
+   * @var string
+   */
+  protected $link_text = '';
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getLinkText() {
+    return $this->link_text;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setLinkText($link_text) {
+    $this->link_text = $link_text;
+  }
+
 }

@@ -18,6 +18,7 @@ class BookmarksTypeForm extends EntityForm {
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
+    /** @var \Drupal\bookmark\Entity\BookmarksTypeInterface $bookmarks_type */
     $bookmarks_type = $this->entity;
     $form['label'] = [
       '#type' => 'textfield',
@@ -37,7 +38,14 @@ class BookmarksTypeForm extends EntityForm {
       '#disabled' => !$bookmarks_type->isNew(),
     ];
 
-    /* You will need additional form elements for your custom properties. */
+    $form['link_text'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Link Text'),
+      '#maxlength' => 255,
+      '#default_value' => ($bookmarks_type->getLinkText()) ?: 'Bookmark this',
+      '#description' => $this->t('The text for the "Bookmark this" link'),
+      '#required' => TRUE,
+    ];
 
     return $form;
   }
