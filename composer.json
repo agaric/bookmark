@@ -1,0 +1,10 @@
+{
+  "name": "drupal/bookmark",
+  "type": "drupal-module",
+  "description": "Bookmarks",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "support": { },
+  "require": { }
+}

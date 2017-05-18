@@ -1,0 +1,5 @@
+name: bookmark
+type: module
+description: Bookmarks
+core: 8.x
+package: GUTS

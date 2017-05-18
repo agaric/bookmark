@@ -1,0 +1,22 @@
+add bookmarks entities:
+  title: 'Create new Bookmarks entities'
+
+administer bookmarks entities:
+  title: 'Administer Bookmarks entities'
+  description: 'Allow to access the administration form to configure Bookmarks entities.'
+  restrict access: true
+
+delete bookmarks entities:
+  title: 'Delete Bookmarks entities'
+
+edit bookmarks entities:
+  title: 'Edit Bookmarks entities'
+
+access bookmarks overview:
+  title: 'Access the Bookmarks overview page'
+
+view published bookmarks entities:
+  title: 'View published Bookmarks entities'
+
+view unpublished bookmarks entities:
+  title: 'View unpublished Bookmarks entities'
