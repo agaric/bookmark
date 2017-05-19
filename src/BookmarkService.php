@@ -2,6 +2,7 @@
 
 namespace Drupal\bookmark;
 
+use Drupal\bookmark\Entity\BookmarksTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountProxy;
 
@@ -35,7 +36,16 @@ class BookmarkService implements BookmarkServiceInterface {
   /**
    * Return all the bookmarktype entities.
    */
-  public function getAllBookmarkTypes() {
-    return $this->entityTypeManager->getStorage('bookmarks_type')->loadMultiple();
+  public function getAllBookmarkTypes($bundle = NULL) {
+    $bookmarks = $this->entityTypeManager->getStorage('bookmarks_type')->loadMultiple();
+
+    if (isset($bundle)) {
+      $bookmarks = array_filter($bookmarks, function (BookmarksTypeInterface $bookmark) use ($bundle) {
+        $bundles = $bookmark->getApplicableBundles();
+        return in_array($bundle, $bundles);
+      });
+    }
+
+    return $bookmarks;
   }
 }

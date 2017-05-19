@@ -6,6 +6,9 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Cache\Cache;
 
 /**
  * Implements hook_help().
@@ -77,4 +80,40 @@ function bookmark_entity_extra_field_info() {
     }
   }
   return $extra;
+}
+
+/**
+ * Implements hook_entity_view().
+ *
+ * Display the link to bookmark a page.
+ */
+function bookmark_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  // Don't show on previews.
+  if ($entity->isNew()) {
+    return;
+  }
+
+  $build['#cache']['contexts'][] = 'user.permissions';
+
+  if (empty($build['#cache']['tags'])) {
+    $build['#cache']['tags'] = [];
+  }
+
+  // Get all possible bookmarks for this entity type.
+  $bookmark_service = \Drupal::service('bookmark');
+  $bookmarks = $bookmark_service->getAllBookmarkTypes($entity->bundle());
+
+  foreach ($bookmarks as $bookmark) {
+    /** @var \Drupal\bookmark\Entity\BookmarksTypeInterface $bookmark */
+    $build['#cache']['tags'] = Cache::mergeTags($build['#cache']['tags'], $bookmark->getCacheTags());
+
+    $build['bookmark_' . $bookmark->id()] = [
+      '#lazy_builder' => ['bookmark.link_builder:build', [
+        $entity->getEntityTypeId(),
+        $entity->id(),
+        $bookmark->id(),
+      ]],
+      '#create_placeholder' => TRUE,
+    ];
+  }
 }
