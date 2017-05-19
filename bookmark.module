@@ -61,13 +61,20 @@ function bookmark_theme_suggestions_bookmarks(array $variables) {
  * Implements hook_entity_extra_field_info().
  */
 function bookmark_entity_extra_field_info() {
-  $extra['node']['article']['display']['bookmarks_' . 'test'] = [
-    'label' => t('Bookmark: %title', [
-      '%title' => 'Bookmark',
-    ]),
-    'description' => t('Bookmark link'),
-    'weight' => 10,
-  ];
-
+  $bookmarks = \Drupal::service('bookmark')->getAllBookmarkTypes();
+  $extra = [];
+  foreach ($bookmarks as $bookmark) {
+    /** @var \Drupal\bookmark\Entity\BookmarksTypeInterface $bookmark */
+    $bundles = $bookmark->getApplicableBundles();
+    foreach ($bundles as $bundle) {
+      $extra['node'][$bundle]['display']['bookmarks_' . $bookmark->id()] = [
+        'label' => t('Bookmark: %title', [
+          '%title' => $bookmark->label(),
+        ]),
+        'description' => t('Bookmark link'),
+        'weight' => 10,
+      ];
+    }
+  }
   return $extra;
 }

@@ -2,7 +2,7 @@
 
 namespace Drupal\bookmark;
 
-use Drupal\Core\Entity\Query\QueryFactory;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountProxy;
 
 /**
@@ -12,25 +12,30 @@ use Drupal\Core\Session\AccountProxy;
  */
 class BookmarkService implements BookmarkServiceInterface {
 
-  /**
-   * Drupal\Core\Entity\Query\QueryFactory definition.
-   *
-   * @var Drupal\Core\Entity\Query\QueryFactory
-   */
-  protected $entity_query;
+  /*
+   * @var EntityTypeManagerInterface
+   * */
+  private $entityTypeManager;
 
   /**
    * Drupal\Core\Session\AccountProxy definition.
    *
-   * @var Drupal\Core\Session\AccountProxy
+   * @param EntityTypeManagerInterface $entity_type_manager
    */
   protected $current_user;
+
   /**
    * Constructor.
    */
-  public function __construct(QueryFactory $entity_query, AccountProxy $current_user) {
-    $this->entity_query = $entity_query;
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, AccountProxy $current_user) {
+    $this->entityTypeManager = $entity_type_manager;
     $this->current_user = $current_user;
   }
 
+  /**
+   * Return all the bookmarktype entities.
+   */
+  public function getAllBookmarkTypes() {
+    return $this->entityTypeManager->getStorage('bookmarks_type')->loadMultiple();
+  }
 }

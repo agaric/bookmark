@@ -98,4 +98,21 @@ class BookmarksType extends ConfigEntityBundleBase implements BookmarksTypeInter
     $this->link_text = $bundles;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getApplicableBundles() {
+    $bundles = $this->getBundles();
+
+    if (empty($bundles)) {
+      // If the setting is empty,return all bundle names.
+      /** @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface $bundle_info_service */
+      $bundle_info_service = \Drupal::service('entity_type.bundle.info');
+      $bundle_info = $bundle_info_service->getBundleInfo('Node');
+      $bundles = array_keys($bundle_info);
+    }
+    return $bundles;
+
+  }
+
 }

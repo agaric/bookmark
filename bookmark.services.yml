@@ -1,5 +1,4 @@
 services:
   bookmark:
     class: Drupal\bookmark\BookmarkService
-    arguments: ["@entity.query", "@current_user"]
-
+    arguments: ['@entity_type.manager', '@current_user']

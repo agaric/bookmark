@@ -36,4 +36,11 @@ interface BookmarksTypeInterface extends ConfigEntityInterface {
    * @param array $bundles
    */
   public function setBundles($bundles);
+
+  /**
+   * Return the bundles where this bookmarktype can be used.
+   *
+   * @return array
+   */
+  public function getApplicableBundles();
 }
