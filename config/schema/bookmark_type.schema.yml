@@ -1,6 +1,6 @@
-bookmark.bookmarks_type.*:
+bookmark.bookmark_type.*:
   type: config_entity
-  label: 'Bookmarks type config'
+  label: 'Bookmark type config'
   mapping:
     id:
       type: string

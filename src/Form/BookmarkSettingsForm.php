@@ -6,13 +6,13 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Class BookmarksSettingsForm.
+ * Class BookmarkSettingsForm.
  *
  * @package Drupal\bookmark\Form
  *
  * @ingroup bookmark
  */
-class BookmarksSettingsForm extends FormBase {
+class BookmarkSettingsForm extends FormBase {
 
   /**
    * Returns a unique string identifying the form.
@@ -21,7 +21,7 @@ class BookmarksSettingsForm extends FormBase {
    *   The unique string identifying the form.
    */
   public function getFormId() {
-    return 'Bookmarks_settings';
+    return 'Bookmark_settings';
   }
 
   /**
@@ -37,7 +37,7 @@ class BookmarksSettingsForm extends FormBase {
   }
 
   /**
-   * Defines the settings form for Bookmarks entities.
+   * Defines the settings form for Bookmark entities.
    *
    * @param array $form
    *   An associative array containing the structure of the form.
@@ -48,7 +48,7 @@ class BookmarksSettingsForm extends FormBase {
    *   Form definition array.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $form['Bookmarks_settings']['#markup'] = 'Settings form for Bookmarks entities. Manage field settings here.';
+    $form['Bookmark_settings']['#markup'] = 'Settings form for Bookmark entities. Manage field settings here.';
     return $form;
   }
 

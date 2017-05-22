@@ -6,15 +6,15 @@ use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
 
 /**
- * Provides a listing of Bookmarks type entities.
+ * Provides a listing of Bookmark type entities.
  */
-class BookmarksTypeListBuilder extends ConfigEntityListBuilder {
+class BookmarkTypeListBuilder extends ConfigEntityListBuilder {
 
   /**
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['label'] = $this->t('Bookmarks type');
+    $header['label'] = $this->t('Bookmark type');
     $header['id'] = $this->t('Machine name');
     return $header + parent::buildHeader();
   }

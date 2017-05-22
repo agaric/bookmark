@@ -10,12 +10,12 @@
  * - content: A list of content items. Use 'content' to print all content, or
  * - attributes: HTML attributes for the container element.
  *
- * @see template_preprocess_bookmarks()
+ * @see template_preprocess_bookmark()
  *
  * @ingroup themeable
  */
 #}
-<div{{ attributes.addClass('bookmarks') }}>
+<div{{ attributes.addClass('bookmark') }}>
   {% if content %}
     {{- content -}}
   {% endif %}

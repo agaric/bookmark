@@ -10,35 +10,35 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\user\UserInterface;
 
 /**
- * Defines the Bookmarks entity.
+ * Defines the Bookmark entity.
  *
  * @ingroup bookmark
  *
  * @ContentEntityType(
- *   id = "bookmarks",
- *   label = @Translation("Bookmarks"),
- *   bundle_label = @Translation("Bookmarks type"),
+ *   id = "bookmark",
+ *   label = @Translation("Bookmark"),
+ *   bundle_label = @Translation("Bookmark type"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\bookmark\BookmarksListBuilder",
- *     "views_data" = "Drupal\bookmark\Entity\BookmarksViewsData",
- *     "translation" = "Drupal\bookmark\BookmarksTranslationHandler",
+ *     "list_builder" = "Drupal\bookmark\BookmarkListBuilder",
+ *     "views_data" = "Drupal\bookmark\Entity\bookmarkViewsData",
+ *     "translation" = "Drupal\bookmark\BookmarkTranslationHandler",
  *
  *     "form" = {
- *       "default" = "Drupal\bookmark\Form\BookmarksForm",
- *       "add" = "Drupal\bookmark\Form\BookmarksForm",
- *       "edit" = "Drupal\bookmark\Form\BookmarksForm",
- *       "delete" = "Drupal\bookmark\Form\BookmarksDeleteForm",
+ *       "default" = "Drupal\bookmark\Form\bookmarkForm",
+ *       "add" = "Drupal\bookmark\Form\bookmarkForm",
+ *       "edit" = "Drupal\bookmark\Form\bookmarkForm",
+ *       "delete" = "Drupal\bookmark\Form\bookmarkDeleteForm",
  *     },
- *     "access" = "Drupal\bookmark\BookmarksAccessControlHandler",
+ *     "access" = "Drupal\bookmark\bookmarkAccessControlHandler",
  *     "route_provider" = {
- *       "html" = "Drupal\bookmark\BookmarksHtmlRouteProvider",
+ *       "html" = "Drupal\bookmark\bookmarkHtmlRouteProvider",
  *     },
  *   },
- *   base_table = "bookmarks",
- *   data_table = "bookmarks_field_data",
+ *   base_table = "bookmark",
+ *   data_table = "bookmark_field_data",
  *   translatable = TRUE,
- *   admin_permission = "administer bookmarks entities",
+ *   admin_permission = "administer bookmark entities",
  *   entity_keys = {
  *     "id" = "id",
  *     "bundle" = "type",
@@ -49,18 +49,18 @@ use Drupal\user\UserInterface;
  *     "status" = "status",
  *   },
  *   links = {
- *     "canonical" = "/admin/structure/bookmarks/{bookmarks}",
- *     "add-page" = "/admin/structure/bookmarks/add",
- *     "add-form" = "/bookmarks/add/{bookmarks_type}",
- *     "edit-form" = "/bookmarks/{bookmarks}/edit",
- *     "delete-form" = "/bookmarks/{bookmarks}/delete",
- *     "collection" = "/admin/structure/bookmarks",
+ *     "canonical" = "/bookmark/{bookmark}",
+ *     "add-page" = "/admin/structure/bookmark/add",
+ *     "add-form" = "/bookmark/add/{bookmark_type}",
+ *     "edit-form" = "/bookmark/{bookmark}/edit",
+ *     "delete-form" = "/bookmark/{bookmark}/delete",
+ *     "collection" = "/admin/structure/bookmark",
  *   },
- *   bundle_entity_type = "bookmarks_type",
- *   field_ui_base_route = "entity.bookmarks_type.edit_form"
+ *   bundle_entity_type = "bookmark_type",
+ *   field_ui_base_route = "entity.bookmark_type.edit_form"
  * )
  */
-class Bookmarks extends ContentEntityBase implements BookmarksInterface {
+class Bookmark extends ContentEntityBase implements bookmarkInterface {
 
   use EntityChangedTrait;
 
@@ -157,7 +157,7 @@ class Bookmarks extends ContentEntityBase implements BookmarksInterface {
 
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))
-      ->setDescription(t('The user ID of author of the Bookmarks entity.'))
+      ->setDescription(t('The user ID of author of the Bookmark entity.'))
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
@@ -182,7 +182,7 @@ class Bookmarks extends ContentEntityBase implements BookmarksInterface {
 
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Name'))
-      ->setDescription(t('The name of the Bookmarks entity.'))
+      ->setDescription(t('The name of the Bookmark entity.'))
       ->setSettings([
         'max_length' => 50,
         'text_processing' => 0,
@@ -222,7 +222,7 @@ class Bookmarks extends ContentEntityBase implements BookmarksInterface {
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
-      ->setDescription(t('A boolean indicating whether the Bookmarks is published.'))
+      ->setDescription(t('A boolean indicating whether the Bookmark is published.'))
       ->setDefaultValue(TRUE);
 
     $fields['created'] = BaseFieldDefinition::create('created')

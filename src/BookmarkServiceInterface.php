@@ -24,14 +24,14 @@ interface BookmarkServiceInterface {
    *
    * @param int $bookmark_id
    *
-   * @return \Drupal\bookmark\Entity\BookmarksType
+   * @return \Drupal\bookmark\Entity\BookmarkType
    */
   public function getBookmarkTypeById($bookmark_id);
 
   /**
    * Generate the link to bookmark an entity (Delete or an Add).
    *
-   * @param \Drupal\bookmark\Entity\BookmarksTypeInterface $bookmarkType
+   * @param \Drupal\bookmark\Entity\BookmarkTypeInterface $bookmarkType
    *   BookmarkType Object
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *
@@ -43,21 +43,21 @@ interface BookmarkServiceInterface {
   /**
    * Generate a link to remove the bookmark.
    *
-   * @param \Drupal\bookmark\Entity\BookmarksTypeInterface $bookmarksType
+   * @param \Drupal\bookmark\Entity\BookmarkTypeInterface $bookmarkType
    *   BookmarkType Object
    * @param array
    *   Return a rendereable array with the link.
    */
-  public function generateDeleteLink($bookmarksType, $entity);
+  public function generateDeleteLink($bookmarkType, $entity);
 
   /**
    * Generate a link to add the bookmark.
    *
-   * @param \Drupal\bookmark\Entity\BookmarksTypeInterface $bookmarksType
+   * @param \Drupal\bookmark\Entity\BookmarkTypeInterface $bookmarkType
    *   BookmarkType Object
    * @param array
    *   Return a rendereable array with the link.
    */
-  public function generateAddLink($bookmarksType, $entity);
+  public function generateAddLink($bookmarkType, $entity);
 
 }

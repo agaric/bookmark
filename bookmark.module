@@ -19,7 +19,7 @@ function bookmark_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.bookmark':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Bookmarks') . '</p>';
+      $output .= '<p>' . t('Bookmark') . '</p>';
       return $output;
 
     default:
@@ -31,7 +31,7 @@ function bookmark_help($route_name, RouteMatchInterface $route_match) {
  */
 function bookmark_theme() {
   $theme = [];
-  $theme['bookmarks'] = [
+  $theme['bookmark'] = [
     'render element' => 'elements',
     'template' => 'bookmarks',
   ];
@@ -45,16 +45,16 @@ function bookmark_theme() {
 /**
 * Implements hook_theme_suggestions_HOOK().
 */
-function bookmark_theme_suggestions_bookmarks(array $variables) {
+function bookmark_theme_suggestions_bookmark(array $variables) {
   $suggestions = [];
-  $entity = $variables['elements']['#bookmarks'];
+  $entity = $variables['elements']['#bookmark'];
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
 
-  $suggestions[] = 'bookmarks__' . $sanitized_view_mode;
-  $suggestions[] = 'bookmarks__' . $entity->bundle();
-  $suggestions[] = 'bookmarks__' . $entity->bundle() . '__' . $sanitized_view_mode;
-  $suggestions[] = 'bookmarks__' . $entity->id();
-  $suggestions[] = 'bookmarks__' . $entity->id() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'bookmark__' . $sanitized_view_mode;
+  $suggestions[] = 'bookmark__' . $entity->bundle();
+  $suggestions[] = 'bookmark__' . $entity->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'bookmark__' . $entity->id();
+  $suggestions[] = 'bookmark__' . $entity->id() . '__' . $sanitized_view_mode;
   return $suggestions;
 }
 
@@ -65,10 +65,10 @@ function bookmark_entity_extra_field_info() {
   $bookmarks = \Drupal::service('bookmark')->getAllBookmarkTypes();
   $extra = [];
   foreach ($bookmarks as $bookmark) {
-    /** @var \Drupal\bookmark\Entity\BookmarksTypeInterface $bookmark */
+    /** @var \Drupal\bookmark\Entity\BookmarkTypeInterface $bookmark */
     $bundles = $bookmark->getApplicableBundles();
     foreach ($bundles as $bundle) {
-      $extra['node'][$bundle]['display']['bookmarks_' . $bookmark->id()] = [
+      $extra['node'][$bundle]['display']['bookmark_' . $bookmark->id()] = [
         'label' => t('Bookmark: %title', [
           '%title' => $bookmark->label(),
         ]),
@@ -102,16 +102,6 @@ function bookmark_entity_view(array &$build, EntityInterface $entity, EntityView
   $bookmarks = $bookmark_service->getAllBookmarkTypes($entity->bundle());
 
   foreach ($bookmarks as $bookmark) {
-    /** @var \Drupal\bookmark\Entity\BookmarksTypeInterface $bookmark */
-    //$build['#cache']['tags'] = Cache::mergeTags($build['#cache']['tags'], $bookmark->getCacheTags());
-//    $build['bookmark_' . $bookmark->id()] = [
-//      '#lazy_builder' => ['bookmark.link_builder:build', [
-//        $entity->getEntityTypeId(),
-//        $entity->id(),
-//        $bookmark->id(),
-//      ]],
-//      '#create_placeholder' => TRUE,
-//    ];
     $build['bookmark_' . $bookmark->id() . $bookmark->getEntityTypeId()] = $bookmark_service->generateLink($bookmark, $entity);
   }
 }

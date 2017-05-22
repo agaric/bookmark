@@ -8,11 +8,11 @@ use Drupal\Core\Routing\LinkGeneratorTrait;
 use Drupal\Core\Url;
 
 /**
- * Defines a class to build a listing of Bookmarks entities.
+ * Defines a class to build a listing of Bookmark entities.
  *
  * @ingroup bookmark
  */
-class BookmarksListBuilder extends EntityListBuilder {
+class BookmarkListBuilder extends EntityListBuilder {
 
   use LinkGeneratorTrait;
 
@@ -20,7 +20,7 @@ class BookmarksListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['id'] = $this->t('Bookmarks ID');
+    $header['id'] = $this->t('Bookmark ID');
     $header['name'] = $this->t('Name');
     return $header + parent::buildHeader();
   }
@@ -29,13 +29,13 @@ class BookmarksListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /* @var $entity \Drupal\bookmark\Entity\Bookmarks */
+    /* @var $entity \Drupal\bookmark\Entity\Bookmark */
     $row['id'] = $entity->id();
     $row['name'] = $this->l(
       $entity->label(),
       new Url(
-        'entity.bookmarks.edit_form', [
-          'bookmarks' => $entity->id(),
+        'entity.bookmark.edit_form', [
+          'bookmark' => $entity->id(),
         ]
       )
     );

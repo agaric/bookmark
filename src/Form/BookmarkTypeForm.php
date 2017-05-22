@@ -8,11 +8,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 
 /**
- * Class BookmarksTypeForm.
+ * Class BookmarkTypeForm.
  *
  * @package Drupal\bookmark\Form
  */
-class BookmarksTypeForm extends EntityForm {
+class BookmarkTypeForm extends EntityForm {
 
   /**
    * The entity type manager.
@@ -46,31 +46,31 @@ class BookmarksTypeForm extends EntityForm {
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
-    /** @var \Drupal\bookmark\Entity\BookmarksTypeInterface $bookmarks_type */
-    $bookmarks_type = $this->entity;
+    /** @var \Drupal\bookmark\Entity\BookmarkTypeInterface $bookmark_type */
+    $bookmark_type = $this->entity;
     $form['label'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Label'),
       '#maxlength' => 255,
-      '#default_value' => $bookmarks_type->label(),
-      '#description' => $this->t("Label for the Bookmarks type."),
+      '#default_value' => $bookmark_type->label(),
+      '#description' => $this->t("Label for the Bookmark type."),
       '#required' => TRUE,
     ];
 
     $form['id'] = [
       '#type' => 'machine_name',
-      '#default_value' => $bookmarks_type->id(),
+      '#default_value' => $bookmark_type->id(),
       '#machine_name' => [
-        'exists' => '\Drupal\bookmark\Entity\BookmarksType::load',
+        'exists' => '\Drupal\bookmark\Entity\BookmarkType::load',
       ],
-      '#disabled' => !$bookmarks_type->isNew(),
+      '#disabled' => !$bookmark_type->isNew(),
     ];
 
     $form['link_text'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Link Text'),
       '#maxlength' => 255,
-      '#default_value' => ($bookmarks_type->getLinkText()) ?: 'Bookmark this',
+      '#default_value' => ($bookmark_type->getLinkText()) ?: 'Bookmark this',
       '#description' => $this->t('The text for the "Bookmark this" link'),
       '#required' => TRUE,
     ];
@@ -93,7 +93,7 @@ class BookmarksTypeForm extends EntityForm {
       '#type' => 'checkboxes',
       '#title' => $this->t('Display the bookmark link on'),
       '#options' => $entity_bundles,
-      '#default_value' => $bookmarks_type->getBundles(),
+      '#default_value' => $bookmark_type->getBundles(),
       '#weight' => 10,
       '#description' => $this->t('Check any content type where you want to display a link to bookmark content.'),
     ];
@@ -106,22 +106,22 @@ class BookmarksTypeForm extends EntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    $bookmarks_type = $this->entity;
-    $status = $bookmarks_type->save();
+    $bookmark_type = $this->entity;
+    $status = $bookmark_type->save();
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Bookmarks type.', [
-          '%label' => $bookmarks_type->label(),
+        drupal_set_message($this->t('Created the %label Bookmark type.', [
+          '%label' => $bookmark_type->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label Bookmarks type.', [
-          '%label' => $bookmarks_type->label(),
+        drupal_set_message($this->t('Saved the %label Bookmark type.', [
+          '%label' => $bookmark_type->label(),
         ]));
     }
-    $form_state->setRedirectUrl($bookmarks_type->toUrl('collection'));
+    $form_state->setRedirectUrl($bookmark_type->toUrl('collection'));
   }
 
 }

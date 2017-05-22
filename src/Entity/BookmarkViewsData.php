@@ -5,9 +5,9 @@ namespace Drupal\bookmark\Entity;
 use Drupal\views\EntityViewsData;
 
 /**
- * Provides Views data for Bookmarks entities.
+ * Provides Views data for Bookmark entities.
  */
-class BookmarksViewsData extends EntityViewsData {
+class BookmarkViewsData extends EntityViewsData {
 
   /**
    * {@inheritdoc}

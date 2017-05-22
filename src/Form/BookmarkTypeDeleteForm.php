@@ -7,9 +7,9 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
 /**
- * Builds the form to delete Bookmarks type entities.
+ * Builds the form to delete Bookmark type entities.
  */
-class BookmarksTypeDeleteForm extends EntityConfirmFormBase {
+class BookmarkTypeDeleteForm extends EntityConfirmFormBase {
 
   /**
    * {@inheritdoc}
@@ -22,7 +22,7 @@ class BookmarksTypeDeleteForm extends EntityConfirmFormBase {
    * {@inheritdoc}
    */
   public function getCancelUrl() {
-    return new Url('entity.bookmarks_type.collection');
+    return new Url('entity.bookmark_type.collection');
   }
 
   /**

@@ -1,18 +1,18 @@
-# Bookmarks routing definition
+# bookmark routing definition
 
-entity.bookmarks.canonical:
-  route_name: entity.bookmarks.canonical
-  base_route: entity.bookmarks.canonical
+entity.bookmark.canonical:
+  route_name: entity.bookmark.canonical
+  base_route: entity.bookmark.canonical
   title: 'View'
 
-entity.bookmarks.edit_form:
-  route_name: entity.bookmarks.edit_form
-  base_route: entity.bookmarks.canonical
+entity.bookmark.edit_form:
+  route_name: entity.bookmark.edit_form
+  base_route: entity.bookmark.canonical
   title: 'Edit'
 
-entity.bookmarks.delete_form:
-  route_name:  entity.bookmarks.delete_form
-  base_route:  entity.bookmarks.canonical
+entity.bookmark.delete_form:
+  route_name:  entity.bookmark.delete_form
+  base_route:  entity.bookmark.canonical
   title: Delete
   weight: 10
 

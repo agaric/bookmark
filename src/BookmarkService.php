@@ -2,7 +2,7 @@
 
 namespace Drupal\bookmark;
 
-use Drupal\bookmark\Entity\BookmarksTypeInterface;
+use Drupal\bookmark\Entity\BookmarkTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
@@ -38,49 +38,49 @@ class BookmarkService implements BookmarkServiceInterface {
    * {@inheritdoc}
    */
   public function getAllBookmarkTypes($bundle = NULL) {
-    $bookmarks = $this->entityTypeManager->getStorage('bookmarks_type')->loadMultiple();
+    $bookmarkTypes = $this->entityTypeManager->getStorage('bookmark_type')->loadMultiple();
     if (isset($bundle)) {
-      $bookmarks = array_filter($bookmarks, function (BookmarksTypeInterface $bookmark) use ($bundle) {
+      $bookmarkTypes = array_filter($bookmarkTypes, function (BookmarkTypeInterface $bookmark) use ($bundle) {
         $bundles = $bookmark->getApplicableBundles();
         return in_array($bundle, $bundles);
       });
     }
 
-    return $bookmarks;
+    return $bookmarkTypes;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getBookmarkTypeById($bookmark_id) {
-    return $this->entityTypeManager->getStorage('bookmarks_type')->load($bookmark_id);
+    return $this->entityTypeManager->getStorage('bookmark_type')->load($bookmark_id);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function generateLink($bookmarksType, $entity) {
-    $bookmarks = $this->entityTypeManager->getStorage('bookmarks')->getQuery();
+  public function generateLink($bookmarkType, $entity) {
+    $bookmarks = $this->entityTypeManager->getStorage('bookmark')->getQuery();
     $bookmarks->condition('url__uri', 'entity:node/' . $entity->id());
-    $bookmarks->condition('type', $bookmarksType->id());
+    $bookmarks->condition('type', $bookmarkType->id());
     $ids = $bookmarks->execute();
 
     if (!empty($ids)) {
-      return $this->generateDeleteLink($bookmarksType, $entity);
+      return $this->generateDeleteLink($bookmarkType, $entity);
     }
     else {
-      return $this->generateAddLink($bookmarksType, $entity);
+      return $this->generateAddLink($bookmarkType, $entity);
     }
   }
 
   /**
    * {@inheritdoc}
    */
-  public function generateAddLink($bookmarksType, $entity) {
+  public function generateAddLink($bookmarkType, $entity) {
     $build = [
       '#type' => 'link',
-      '#title' => $bookmarksType->getLinkText(),
-      '#url' => Url::fromUserInput('/admin/structure/bookmarks/add/' . $bookmarksType->id()),
+      '#title' => $bookmarkType->getLinkText(),
+      '#url' => Url::fromUserInput('/bookmark/add/' . $bookmarkType->id()),
       '#attributes' => [
         'class' => ['use-ajax'],
         'data-dialog-type' => 'modal',
@@ -102,11 +102,11 @@ class BookmarkService implements BookmarkServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function generateDeleteLink($bookmarksType, $entity) {
+  public function generateDeleteLink($bookmarkType, $entity) {
     $build = [
       '#type' => 'link',
       '#title' => 'Remove from my bookmarks',
-      '#url' => Url::fromUserInput('/admin/structure/bookmarks/add/' . $bookmarksType->id()),
+      '#url' => Url::fromUserInput('/bookmark/add/' . $bookmarkType->id()),
     ];
 
     return $build;

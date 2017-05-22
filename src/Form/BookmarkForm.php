@@ -6,17 +6,17 @@ use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Form controller for Bookmarks edit forms.
+ * Form controller for Bookmark edit forms.
  *
  * @ingroup bookmark
  */
-class BookmarksForm extends ContentEntityForm {
+class BookmarkForm extends ContentEntityForm {
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    /* @var $entity \Drupal\bookmark\Entity\Bookmarks */
+    /* @var $entity \Drupal\bookmark\Entity\Bookmark */
     $form = parent::buildForm($form, $form_state);
 
     $entity = $this->entity;
@@ -34,17 +34,17 @@ class BookmarksForm extends ContentEntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Bookmarks.', [
+        drupal_set_message($this->t('Created the %label Bookmark.', [
           '%label' => $entity->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label Bookmarks.', [
+        drupal_set_message($this->t('Saved the %label Bookmark.', [
           '%label' => $entity->label(),
         ]));
     }
-    $form_state->setRedirect('entity.bookmarks.canonical', ['bookmarks' => $entity->id()]);
+    $form_state->setRedirect('entity.bookmark.canonical', ['bookmark' => $entity->id()]);
   }
 
 }

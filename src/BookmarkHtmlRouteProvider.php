@@ -7,12 +7,12 @@ use Drupal\Core\Entity\Routing\AdminHtmlRouteProvider;
 use Symfony\Component\Routing\Route;
 
 /**
- * Provides routes for Bookmarks entities.
+ * Provides routes for Bookmark entities.
  *
  * @see Drupal\Core\Entity\Routing\AdminHtmlRouteProvider
  * @see Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider
  */
-class BookmarksHtmlRouteProvider extends AdminHtmlRouteProvider {
+class BookmarkHtmlRouteProvider extends AdminHtmlRouteProvider {
 
   /**
    * {@inheritdoc}
@@ -51,7 +51,7 @@ class BookmarksHtmlRouteProvider extends AdminHtmlRouteProvider {
           '_entity_list' => $entity_type_id,
           '_title' => "{$entity_type->getLabel()} list",
         ])
-        ->setRequirement('_permission', 'access bookmarks overview')
+        ->setRequirement('_permission', 'access bookmark overview')
         ->setOption('_admin_route', TRUE);
 
       return $route;
@@ -72,7 +72,7 @@ class BookmarksHtmlRouteProvider extends AdminHtmlRouteProvider {
       $route = new Route("/admin/structure/{$entity_type->id()}/settings");
       $route
         ->setDefaults([
-          '_form' => 'Drupal\bookmark\Form\BookmarksSettingsForm',
+          '_form' => 'Drupal\bookmark\Form\BookmarkSettingsForm',
           '_title' => "{$entity_type->getLabel()} settings",
         ])
         ->setRequirement('_permission', $entity_type->getAdminPermission())

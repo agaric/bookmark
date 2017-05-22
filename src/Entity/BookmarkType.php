@@ -5,50 +5,50 @@ namespace Drupal\bookmark\Entity;
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
 
 /**
- * Defines the Bookmarks type entity.
+ * Defines the Bookmark type entity.
  *
  * @ConfigEntityType(
- *   id = "bookmarks_type",
- *   label = @Translation("Bookmarks type"),
+ *   id = "bookmark_type",
+ *   label = @Translation("Bookmark type"),
  *   handlers = {
- *     "list_builder" = "Drupal\bookmark\BookmarksTypeListBuilder",
+ *     "list_builder" = "Drupal\bookmark\bookmarkTypeListBuilder",
  *     "form" = {
- *       "add" = "Drupal\bookmark\Form\BookmarksTypeForm",
- *       "edit" = "Drupal\bookmark\Form\BookmarksTypeForm",
- *       "delete" = "Drupal\bookmark\Form\BookmarksTypeDeleteForm"
+ *       "add" = "Drupal\bookmark\Form\bookmarkTypeForm",
+ *       "edit" = "Drupal\bookmark\Form\bookmarkTypeForm",
+ *       "delete" = "Drupal\bookmark\Form\bookmarkTypeDeleteForm"
  *     },
  *     "route_provider" = {
- *       "html" = "Drupal\bookmark\BookmarksTypeHtmlRouteProvider",
+ *       "html" = "Drupal\bookmark\bookmarkTypeHtmlRouteProvider",
  *     },
  *   },
- *   config_prefix = "bookmarks_type",
+ *   config_prefix = "bookmark_type",
  *   admin_permission = "administer site configuration",
- *   bundle_of = "bookmarks",
+ *   bundle_of = "bookmark",
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label",
  *     "uuid" = "uuid"
  *   },
  *   links = {
- *     "canonical" = "/admin/structure/bookmarks_type/{bookmarks_type}",
- *     "add-form" = "/admin/structure/bookmarks_type/add",
- *     "edit-form" = "/admin/structure/bookmarks_type/{bookmarks_type}/edit",
- *     "delete-form" = "/admin/structure/bookmarks_type/{bookmarks_type}/delete",
- *     "collection" = "/admin/structure/bookmarks_type"
+ *     "canonical" = "/admin/structure/bookmark_type/{bookmark_type}",
+ *     "add-form" = "/admin/structure/bookmark_type/add",
+ *     "edit-form" = "/admin/structure/bookmark_type/{bookmark_type}/edit",
+ *     "delete-form" = "/admin/structure/bookmark_type/{bookmark_type}/delete",
+ *     "collection" = "/admin/structure/bookmark_type"
  *   }
  * )
  */
-class BookmarksType extends ConfigEntityBundleBase implements BookmarksTypeInterface {
+class BookmarkType extends ConfigEntityBundleBase implements bookmarkTypeInterface {
 
   /**
-   * The Bookmarks type ID.
+   * The Bookmark type ID.
    *
    * @var string
    */
   protected $id;
 
   /**
-   * The Bookmarks type label.
+   * The Bookmark type label.
    *
    * @var string
    */

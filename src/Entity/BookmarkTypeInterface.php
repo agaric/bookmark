@@ -6,9 +6,9 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Session\AccountInterface;
 
 /**
- * Provides an interface for defining Bookmarks type entities.
+ * Provides an interface for defining Bookmark type entities.
  */
-interface BookmarksTypeInterface extends ConfigEntityInterface {
+interface BookmarkTypeInterface extends ConfigEntityInterface {
 
   /**
    * Get the link_text.

@@ -1,11 +1,11 @@
-entity.bookmarks.add_form:
-  route_name: 'entity.bookmarks.add_page'
-  title: 'Add Bookmarks'
+entity.bookmark.add_form:
+  route_name: 'entity.bookmark.add_page'
+  title: 'Add Bookmark'
   appears_on:
-    - entity.bookmarks.collection
-entity.bookmarks_type.add_form:
-  route_name: 'entity.bookmarks_type.add_form'
-  title: 'Add Bookmarks type'
+    - entity.bookmark.collection
+entity.bookmark_type.add_form:
+  route_name: 'entity.bookmark_type.add_form'
+  title: 'Add Bookmark type'
   appears_on:
-    - entity.bookmarks_type.collection
+    - entity.bookmark_type.collection
 

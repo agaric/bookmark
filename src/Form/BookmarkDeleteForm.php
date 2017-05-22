@@ -5,11 +5,11 @@ namespace Drupal\bookmark\Form;
 use Drupal\Core\Entity\ContentEntityDeleteForm;
 
 /**
- * Provides a form for deleting Bookmarks entities.
+ * Provides a form for deleting Bookmark entities.
  *
  * @ingroup bookmark
  */
-class BookmarksDeleteForm extends ContentEntityDeleteForm {
+class BookmarkDeleteForm extends ContentEntityDeleteForm {
 
 
 }
