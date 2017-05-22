@@ -19,9 +19,9 @@ class BookmarkLinkBuilder implements BookmarkLinkBuilderInterface {
   protected $entityTypeManager;
 
   /**
-   * The flag service.
+   * The bookmark service.
    *
-   * @var \Drupal\flag\FlagServiceInterface
+   * @var \Drupal\bookmark\BookmarkService
    */
   protected $bookmarkService;
 
@@ -42,12 +42,10 @@ class BookmarkLinkBuilder implements BookmarkLinkBuilderInterface {
    * {@inheritdoc}
    */
   public function build($entity_type_id, $entity_id, $bookmark_id) {
-    //$entity = $this->entityTypeManager->getStorage($entity_type_id)->load($entity_id);
-    //$bookmark = $this->bookmarkService->getFlagById($bookmark_id);
-    return [
-      '#type' => 'markup',
-      '#markup' => '<strong>Hi</strong>',
-    ];
+    $entity = $this->entityTypeManager->getStorage($entity_type_id)->load($entity_id);
+    $bookmarkType = $this->bookmarkService->getBookmarkById($bookmark_id);
+
+    return $bookmarkType->generateLink($entity);
   }
 
 }

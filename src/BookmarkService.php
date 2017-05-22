@@ -34,7 +34,7 @@ class BookmarkService implements BookmarkServiceInterface {
   }
 
   /**
-   * Return all the bookmarktype entities.
+   * {@inheritdoc}
    */
   public function getAllBookmarkTypes($bundle = NULL) {
     $bookmarks = $this->entityTypeManager->getStorage('bookmarks_type')->loadMultiple();
@@ -47,5 +47,12 @@ class BookmarkService implements BookmarkServiceInterface {
     }
 
     return $bookmarks;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getBookmarkById($bookmark_id) {
+    return $this->entityTypeManager->getStorage('bookmarks_type')->load($bookmark_id);
   }
 }

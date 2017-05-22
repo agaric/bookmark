@@ -115,4 +115,11 @@ class BookmarksType extends ConfigEntityBundleBase implements BookmarksTypeInter
 
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function generateLink($entity) {
+
+  }
+
 }
