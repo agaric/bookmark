@@ -51,9 +51,9 @@ use Drupal\user\UserInterface;
  *   links = {
  *     "canonical" = "/admin/structure/bookmarks/{bookmarks}",
  *     "add-page" = "/admin/structure/bookmarks/add",
- *     "add-form" = "/admin/structure/bookmarks/add/{bookmarks_type}",
- *     "edit-form" = "/admin/structure/bookmarks/{bookmarks}/edit",
- *     "delete-form" = "/admin/structure/bookmarks/{bookmarks}/delete",
+ *     "add-form" = "/bookmarks/add/{bookmarks_type}",
+ *     "edit-form" = "/bookmarks/{bookmarks}/edit",
+ *     "delete-form" = "/bookmarks/{bookmarks}/delete",
  *     "collection" = "/admin/structure/bookmarks",
  *   },
  *   bundle_entity_type = "bookmarks_type",

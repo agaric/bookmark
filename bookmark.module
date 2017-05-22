@@ -114,6 +114,6 @@ function bookmark_entity_view(array &$build, EntityInterface $entity, EntityView
 //      ]],
 //      '#create_placeholder' => TRUE,
 //    ];
-    $build['bookmark_' . $bookmark->id()] = $bookmark->generateLink($entity);
+    $build['bookmark_' . $bookmark->id() . $bookmark->getEntityTypeId()] = $bookmark_service->generateLink($bookmark, $entity);
   }
 }

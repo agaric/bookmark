@@ -43,7 +43,7 @@ class BookmarkLinkBuilder implements BookmarkLinkBuilderInterface {
    */
   public function build($entity_type_id, $entity_id, $bookmark_id) {
     $entity = $this->entityTypeManager->getStorage($entity_type_id)->load($entity_id);
-    $bookmarkType = $this->bookmarkService->getBookmarkById($bookmark_id);
+    $bookmarkType = $this->bookmarkService->getBookmarkTypeById($bookmark_id);
 
     return $bookmarkType->generateLink($entity);
   }

@@ -3,7 +3,6 @@
 namespace Drupal\bookmark\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
-use Drupal\Core\Url;
 
 /**
  * Defines the Bookmarks type entity.
@@ -114,28 +113,6 @@ class BookmarksType extends ConfigEntityBundleBase implements BookmarksTypeInter
     }
     return $bundles;
 
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function generateLink($entity) {
-    $build = [
-      '#type' => 'link',
-      '#title' => $this->getLinkText(),
-      '#url' => Url::fromUserInput('/admin/structure/bookmarks/add/' . $this->id()),
-      '#attributes' => [
-        'class' => ['use-ajax'],
-        'data-dialog-type' => 'modal',
-        'data-dialog-options' => json_encode([
-          'width' => 800,
-          'height' => 500,
-        ]),
-      ],
-    ];
-    $build['#attached']['library'][] = 'core/drupal.ajax';
-    $build['#attributes']['class'][] = 'use-ajax';
-    return $build;
   }
 
 }
