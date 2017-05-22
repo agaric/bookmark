@@ -33,13 +33,11 @@ function bookmark_theme() {
   $theme = [];
   $theme['bookmarks'] = [
     'render element' => 'elements',
-    'file' => 'bookmarks.page.inc',
     'template' => 'bookmarks',
   ];
   $theme['bookmarks_content_add_list'] = [
     'render element' => 'content',
     'variables' => ['content' => NULL],
-    'file' => 'bookmarks.page.inc',
   ];
   return $theme;
 }
