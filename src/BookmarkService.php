@@ -38,7 +38,6 @@ class BookmarkService implements BookmarkServiceInterface {
    */
   public function getAllBookmarkTypes($bundle = NULL) {
     $bookmarks = $this->entityTypeManager->getStorage('bookmarks_type')->loadMultiple();
-
     if (isset($bundle)) {
       $bookmarks = array_filter($bookmarks, function (BookmarksTypeInterface $bookmark) use ($bundle) {
         $bundles = $bookmark->getApplicableBundles();

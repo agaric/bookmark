@@ -105,15 +105,15 @@ function bookmark_entity_view(array &$build, EntityInterface $entity, EntityView
 
   foreach ($bookmarks as $bookmark) {
     /** @var \Drupal\bookmark\Entity\BookmarksTypeInterface $bookmark */
-    $build['#cache']['tags'] = Cache::mergeTags($build['#cache']['tags'], $bookmark->getCacheTags());
-
-    $build['bookmark_' . $bookmark->id()] = [
-      '#lazy_builder' => ['bookmark.link_builder:build', [
-        $entity->getEntityTypeId(),
-        $entity->id(),
-        $bookmark->id(),
-      ]],
-      '#create_placeholder' => TRUE,
-    ];
+    //$build['#cache']['tags'] = Cache::mergeTags($build['#cache']['tags'], $bookmark->getCacheTags());
+//    $build['bookmark_' . $bookmark->id()] = [
+//      '#lazy_builder' => ['bookmark.link_builder:build', [
+//        $entity->getEntityTypeId(),
+//        $entity->id(),
+//        $bookmark->id(),
+//      ]],
+//      '#create_placeholder' => TRUE,
+//    ];
+    $build['bookmark_' . $bookmark->id()] = $bookmark->generateLink($entity);
   }
 }

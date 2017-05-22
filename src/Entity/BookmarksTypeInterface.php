@@ -47,7 +47,7 @@ interface BookmarksTypeInterface extends ConfigEntityInterface {
   /**
    * Generate the link to bookmark an entity.
    *
-   * @param \Drupal\Core\Entity\Entity $entity
+   * @param \Drupal\Core\Entity\EntityInterface $entity
    *
    * @return array
    *   Return a rendereable array with the link.
