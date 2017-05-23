@@ -43,6 +43,8 @@ interface BookmarkServiceInterface {
   /**
    * Generate a link to remove the bookmark.
    *
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   Entity where the link will be displayed.
    * @param \Drupal\bookmark\Entity\BookmarkTypeInterface $bookmarkType
    *   BookmarkType Object
    * @param array
@@ -53,6 +55,8 @@ interface BookmarkServiceInterface {
   /**
    * Generate a link to add the bookmark.
    *
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   Entity where the link will be displayed.
    * @param \Drupal\bookmark\Entity\BookmarkTypeInterface $bookmarkType
    *   BookmarkType Object
    * @param array

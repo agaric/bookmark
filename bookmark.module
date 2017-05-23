@@ -98,6 +98,7 @@ function bookmark_entity_view(array &$build, EntityInterface $entity, EntityView
   }
 
   // Get all possible bookmarks for this entity type.
+  /** @var \Drupal\bookmark\BookmarkService $bookmark_service */
   $bookmark_service = \Drupal::service('bookmark');
   $bookmarks = $bookmark_service->getAllBookmarkTypes($entity->bundle());
 

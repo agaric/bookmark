@@ -2,6 +2,3 @@ services:
   bookmark:
     class: Drupal\bookmark\BookmarkService
     arguments: ['@entity_type.manager', '@current_user']
-  bookmark.link_builder:
-    class: Drupal\bookmark\BookmarkLinkBuilder
-    arguments: ['@entity.manager', '@bookmark']
