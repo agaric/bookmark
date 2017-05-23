@@ -4,6 +4,8 @@ namespace Drupal\bookmark\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
+use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -81,12 +83,38 @@ class BookmarkForm extends ContentEntityForm {
     return $form;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    // @todo Validate the form and make it compatible with the ajax submit.
+    return parent::validateForm($form, $form_state);
+  }
+
+
+
+  /**
+   * Doesn't save the bookmark, just close the modal window.
+   *
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   */
   public function cancelAjaxSubmit(array &$form, FormStateInterface $formState) {
     $response = new AjaxResponse();
     $response->addCommand(new CloseModalDialogCommand());
     return $response;
   }
 
+  /**
+   * Save the bookmark.
+   *
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   */
   public function ajaxSubmit(array &$form, FormStateInterface $form_state) {
     $entity = &$this->entity;
 
@@ -108,9 +136,20 @@ class BookmarkForm extends ContentEntityForm {
     $response = new AjaxResponse();
 
     if ($form_state->getErrors()) {
-      // Error code here.
+      // @todo display any error correctly in the form.
+      // Add a command to execute on form, jQuery .html() replaces content between tags.
+      // In this case, we replace the desription with wheter the username was found or not.
+      //$response->addCommand(new HtmlCommand('input[name=name[0][value]', $text));
+
+      // Add a command, InvokeCommand, which allows for custom jQuery commands.
+      // In this case, we alter the color of the description.
+      //$response->addCommand(new InvokeCommand('#edit-user-name--description', 'css', array('color', $color)));
+
+      // Return the AjaxResponse Object.
+      return $response;
     }
     else {
+      // @todo display a message that the bookmark was saved correctly.
       $response->addCommand(new CloseModalDialogCommand());
     }
     return $response;
