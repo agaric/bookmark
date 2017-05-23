@@ -2,6 +2,8 @@
 
 namespace Drupal\bookmark\Form;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -62,13 +64,18 @@ class BookmarkForm extends ContentEntityForm {
       $form['url']['widget'][0]['uri']['#default_value'] = "{$node->label()} ({$node->id()})";
       $form['url']['widget'][0]['uri']['#attributes']['readonly'] = 'readonly';
     }
+
+    // Ajax Modal.
+    $form['actions']['submit']['#submit'] = [];
+    $form['actions']['submit']['#ajax'] = [
+      'callback' => '::ajaxSubmit',
+      'event' => 'click',
+    ];
+
     return $form;
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function save(array $form, FormStateInterface $form_state) {
+  public function ajaxSubmit(array &$form, FormStateInterface $form_state) {
     $entity = &$this->entity;
 
     $status = parent::save($form, $form_state);
@@ -85,7 +92,16 @@ class BookmarkForm extends ContentEntityForm {
           '%label' => $entity->label(),
         ]));
     }
-    $form_state->setRedirect('entity.bookmark.canonical', ['bookmark' => $entity->id()]);
+
+    $response = new AjaxResponse();
+
+    if ($form_state->getErrors()) {
+      // Error code here.
+    }
+    else {
+      $response->addCommand(new CloseModalDialogCommand());
+    }
+    return $response;
   }
 
 }
