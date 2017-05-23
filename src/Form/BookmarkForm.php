@@ -103,6 +103,7 @@ class BookmarkForm extends ContentEntityForm {
    */
   public function cancelAjaxSubmit(array &$form, FormStateInterface $formState) {
     $response = new AjaxResponse();
+    $response->addCommand(new InvokeCommand('body', 'updateBookmarkLink', array('success', 'success' )));
     $response->addCommand(new CloseModalDialogCommand());
     return $response;
   }

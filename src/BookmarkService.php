@@ -96,6 +96,7 @@ class BookmarkService implements BookmarkServiceInterface {
         'library' => [
           'core/drupal.ajax',
           'core/drupal.dialog.ajax',
+          'bookmark/bookmark.dialog',
         ],
       ],
     ];
