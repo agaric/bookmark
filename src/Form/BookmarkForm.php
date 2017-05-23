@@ -4,7 +4,6 @@ namespace Drupal\bookmark\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
-use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
@@ -122,21 +121,7 @@ class BookmarkForm extends ContentEntityForm {
    */
   public function ajaxSubmit(array &$form, FormStateInterface $form_state) {
     $entity = &$this->entity;
-
     $status = parent::save($form, $form_state);
-
-    switch ($status) {
-      case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Bookmark.', [
-          '%label' => $entity->label(),
-        ]));
-        break;
-
-      default:
-        drupal_set_message($this->t('Saved the %label Bookmark.', [
-          '%label' => $entity->label(),
-        ]));
-    }
 
     $response = new AjaxResponse();
 
