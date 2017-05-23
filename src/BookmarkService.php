@@ -86,6 +86,7 @@ class BookmarkService implements BookmarkServiceInterface {
       '#url' => $url,
       '#attributes' => [
         'class' => ['use-ajax'],
+        'data-bookmark-entity-id' => $entity->id(),
         'data-dialog-type' => 'modal',
         'data-dialog-options' => json_encode([
           'width' => 800,

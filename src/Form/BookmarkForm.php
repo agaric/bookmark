@@ -25,6 +25,11 @@ class BookmarkForm extends ContentEntityForm {
   var $requestStack;
 
   /**
+   * @var \Drupal\Core\Entity\Entity
+   */
+  var $targetEntity;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct($entity_manager, $entity_type_bundle_info = NULL, $time = NULL, RequestStack $request_stack) {
@@ -60,10 +65,10 @@ class BookmarkForm extends ContentEntityForm {
 
     // If this was clicked using the link in the entity, let's prepopulate the
     // url and the title.
-    if (isset($query['entity_id']) && is_numeric($query['entity_id']) && $node = Node::load($query['entity_id'])) {
-      $form['url']['widget'][0]['title']['#default_value'] = $node->label();
+    if (isset($query['entity_id']) && is_numeric($query['entity_id']) && $this->targetEntity = Node::load($query['entity_id'])) {
+      $form['url']['widget'][0]['title']['#default_value'] = $this->targetEntity->label();
       $form['url']['widget'][0]['title']['#attributes']['readonly'] = 'readonly';
-      $form['url']['widget'][0]['uri']['#default_value'] = "{$node->label()} ({$node->id()})";
+      $form['url']['widget'][0]['uri']['#default_value'] = "{$this->targetEntity->label()} ({$this->targetEntity->id()})";
       $form['url']['widget'][0]['uri']['#attributes']['readonly'] = 'readonly';
     }
 
@@ -103,7 +108,6 @@ class BookmarkForm extends ContentEntityForm {
    */
   public function cancelAjaxSubmit(array &$form, FormStateInterface $formState) {
     $response = new AjaxResponse();
-    $response->addCommand(new InvokeCommand('body', 'updateBookmarkLink', array('success', 'success' )));
     $response->addCommand(new CloseModalDialogCommand());
     return $response;
   }
@@ -150,7 +154,14 @@ class BookmarkForm extends ContentEntityForm {
       return $response;
     }
     else {
-      // @todo display a message that the bookmark was saved correctly.
+      $arguments[] = 'success';
+      if ($this->targetEntity) {
+        $arguments[] = $this->targetEntity->id();
+      } else {
+        $arguments[] = 0;
+      }
+
+      $response->addCommand(new InvokeCommand(NULL, 'updateBookmarkLink', $arguments));
       $response->addCommand(new CloseModalDialogCommand());
     }
     return $response;
