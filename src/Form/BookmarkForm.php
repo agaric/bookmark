@@ -71,8 +71,20 @@ class BookmarkForm extends ContentEntityForm {
       'callback' => '::ajaxSubmit',
       'event' => 'click',
     ];
+    $form['actions']['cancel'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Cancel'),
+      '#submit' => [],
+      '#ajax' => ['callback' => '::cancelAjaxSubmit', 'event' => 'click'],
+    ];
 
     return $form;
+  }
+
+  public function cancelAjaxSubmit(array &$form, FormStateInterface $formState) {
+    $response = new AjaxResponse();
+    $response->addCommand(new CloseModalDialogCommand());
+    return $response;
   }
 
   public function ajaxSubmit(array &$form, FormStateInterface $form_state) {
