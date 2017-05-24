@@ -52,8 +52,8 @@ class BookmarkService implements BookmarkServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function getBookmarkTypeById($bookmark_id) {
-    return $this->entityTypeManager->getStorage('bookmark_type')->load($bookmark_id);
+  public function getBookmarkTypeById($bookmark_type_id) {
+    return $this->entityTypeManager->getStorage('bookmark_type')->load($bookmark_type_id);
   }
 
   /**
@@ -108,10 +108,22 @@ class BookmarkService implements BookmarkServiceInterface {
    * {@inheritdoc}
    */
   public function generateDeleteLink($bookmarkType, $entity) {
+    $url = Url::fromRoute('bookmark.actions_controller_delete', ['bookmark_type' => $bookmarkType->id()]);
+    $url->setOption('query', ['entity_id' => $entity->id()]);
     $build = [
       '#type' => 'link',
       '#title' => 'Remove from my bookmarks',
-      '#url' => Url::fromUserInput('/bookmark/add/' . $bookmarkType->id()),
+      '#url' => $url,
+      '#attributes' => [
+        'class' => ['use-ajax'],
+        'data-bookmark-entity-id' => $entity->id(),
+      ],
+      '#attached' => [
+        'library' => [
+          'core/drupal.ajax',
+          'bookmark/bookmark.dialog',
+        ],
+      ],
     ];
 
     return $build;

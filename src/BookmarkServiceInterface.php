@@ -22,11 +22,11 @@ interface BookmarkServiceInterface {
   /**
    * Return the bookmarktype object.
    *
-   * @param int $bookmark_id
+   * @param int $bookmark_type_id
    *
    * @return \Drupal\bookmark\Entity\BookmarkType
    */
-  public function getBookmarkTypeById($bookmark_id);
+  public function getBookmarkTypeById($bookmark_type_id);
 
   /**
    * Generate the link to bookmark an entity (Delete or an Add).
