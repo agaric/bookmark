@@ -1,17 +1,15 @@
-
-# In order to to create pages it is necessary to define routes for them.
-# A route maps a URL path to a controller. It defines what function
-# or method will be called when a URL is accessed.
-# If the user accesses http://drupal8.dev//bookmark/delete/{bookmark}, the routing
-# system will look for a route with that path. In this case it will find a
-# match, and execute the _controller callback. In this case the callback is
-# defined as a classname
-# ("\Drupal\bookmark\Controller\ActionsController")
-# and a method ("delete").
 bookmark.actions_controller_delete:
   path: '/bookmark/delete/{bookmark_id}'
   defaults:
     _controller: '\Drupal\bookmark\Controller\ActionsController::delete'
     _title: 'delete'
+  requirements:
+    _permission: 'access content'
+
+bookmark.actions_controller_my_bookmarks:
+  path: '/my-bookmarks'
+  defaults:
+    _controller: '\Drupal\bookmark\Controller\ActionsController::myBookmarks'
+    _title: 'My Bookmarks'
   requirements:
     _permission: 'access content'

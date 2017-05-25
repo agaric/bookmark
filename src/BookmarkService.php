@@ -52,6 +52,20 @@ class BookmarkService implements BookmarkServiceInterface {
   /**
    * {@inheritdoc}
    */
+  public function getAllBookmarksByUser($user_id) {
+    $query = $this->entityTypeManager->getStorage('bookmark')->getQuery();
+    $query->condition('user_id', $user_id);
+    $query->pager();
+    $ids = $query->execute();
+    $bookmarks = array_map(function($id) {
+      return $this->entityTypeManager->getStorage('bookmark')->load($id);
+    }, $ids);
+    return $bookmarks;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getBookmarkTypeById($bookmark_type_id) {
     return $this->entityTypeManager->getStorage('bookmark_type')->load($bookmark_type_id);
   }

@@ -15,8 +15,12 @@
  * @ingroup themeable
  */
 #}
-<div{{ attributes.addClass('bookmark') }}>
-  {% if content %}
-    {{- content -}}
+<div{{ attributes.addClass('bookmarks') }}>
+  {% if bookmarks %}
+    <ul>
+      {% for bookmark in bookmarks %}
+        <li>{{ bookmark.id() }} - {{ bookmark.label() }}</li>
+      {% endfor %}
+    </ul>
   {% endif %}
 </div>

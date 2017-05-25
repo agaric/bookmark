@@ -29,6 +29,14 @@ interface BookmarkServiceInterface {
   public function getBookmarkTypeById($bookmark_type_id);
 
   /**
+   * Return the bookmarks of an specific user.
+   *
+   * @param int $user_id
+   * @return \Drupal\Core\Entity\EntityInterface[]
+   */
+  public function getAllBookmarksByUser($user_id);
+
+  /**
    * Generate the link to bookmark an entity (Delete or an Add).
    *
    * @param \Drupal\bookmark\Entity\BookmarkTypeInterface $bookmarkType

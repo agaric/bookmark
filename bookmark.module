@@ -31,6 +31,9 @@ function bookmark_help($route_name, RouteMatchInterface $route_match) {
  */
 function bookmark_theme() {
   $theme = [];
+  $theme['bookmarks_list'] = [
+    'variables' => ['bookmarks' => NULL],
+  ];
   $theme['bookmark'] = [
     'render element' => 'elements',
     'template' => 'bookmarks',

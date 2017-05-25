@@ -95,4 +95,22 @@ class ActionsController extends ControllerBase {
     return $response;
   }
 
+  /**
+   * My Bookmarks page.
+   */
+  public function myBookmarks() {
+    // @todo use a view instead of this method.
+    $bookmarks = $this->bookmarkService->getAllBookmarksByUser($this->currentUser->id());
+
+    return [
+      '#theme' => 'bookmarks_list',
+      '#bookmarks' => $bookmarks,
+      'pager' => [
+        '#theme' => 'pager',
+        '#weight' => 10,
+      ],
+    ];
+
+  }
+
 }
