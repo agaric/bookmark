@@ -66,7 +66,8 @@ class BookmarkService implements BookmarkServiceInterface {
     $ids = $bookmarks->execute();
 
     if (!empty($ids)) {
-      return $this->generateDeleteLink($bookmarkType, $entity);
+      $id = array_shift($ids);
+      return $this->generateDeleteLink($id, $entity);
     }
     else {
       return $this->generateAddLink($bookmarkType, $entity);
@@ -78,7 +79,7 @@ class BookmarkService implements BookmarkServiceInterface {
    */
   public function generateAddLink($bookmarkType, $entity) {
     /** @var \Drupal\Core\Url $url */
-    $url = Url::fromUserInput('/bookmark/add/' . $bookmarkType->id());
+    $url = Url::fromRoute('entity.bookmark.add_form', ['bookmark_type' => $bookmarkType->id()]);
     $url->setOption('query', ['entity_id' => $entity->id()]);
     $build = [
       '#type' => 'link',
@@ -107,9 +108,8 @@ class BookmarkService implements BookmarkServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function generateDeleteLink($bookmarkType, $entity) {
-    $url = Url::fromRoute('bookmark.actions_controller_delete', ['bookmark_type' => $bookmarkType->id()]);
-    $url->setOption('query', ['entity_id' => $entity->id()]);
+  public function generateDeleteLink($bookmark_id, $entity) {
+    $url = Url::fromRoute('bookmark.actions_controller_delete', ['bookmark_id' => $bookmark_id]);
     $build = [
       '#type' => 'link',
       '#title' => 'Remove from my bookmarks',

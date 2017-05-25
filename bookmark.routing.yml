@@ -9,7 +9,7 @@
 # ("\Drupal\bookmark\Controller\ActionsController")
 # and a method ("delete").
 bookmark.actions_controller_delete:
-  path: '/bookmark/delete/{bookmark_type}'
+  path: '/bookmark/delete/{bookmark_id}'
   defaults:
     _controller: '\Drupal\bookmark\Controller\ActionsController::delete'
     _title: 'delete'
