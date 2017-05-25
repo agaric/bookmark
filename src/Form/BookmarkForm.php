@@ -5,6 +5,7 @@ namespace Drupal\bookmark\Form;
 use Drupal\bookmark\BookmarkServiceInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
+use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\ReplaceCommand;
@@ -35,12 +36,18 @@ class BookmarkForm extends ContentEntityForm {
   var $bookmarkService;
 
   /**
+   * @var CacheTagsInvalidatorInterface
+   */
+  protected $cacheTagsInvalidator;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct($entity_manager, $entity_type_bundle_info = NULL, $time = NULL, RequestStack $request_stack, BookmarkServiceInterface $bookmark_service) {
+  public function __construct($entity_manager, $entity_type_bundle_info = NULL, $time = NULL, RequestStack $request_stack, BookmarkServiceInterface $bookmark_service, CacheTagsInvalidatorInterface $cache_tags_invalidator) {
     parent::__construct($entity_manager, $entity_type_bundle_info = NULL, $time = NULL);
     $this->requestStack = $request_stack;
     $this->bookmarkService = $bookmark_service;
+    $this->cacheTagsInvalidator = $cache_tags_invalidator;
   }
 
   /**
@@ -52,7 +59,8 @@ class BookmarkForm extends ContentEntityForm {
       $container->get('entity_type.bundle.info'),
       $container->get('datetime.time'),
       $container->get('request_stack'),
-      $container->get('bookmark')
+      $container->get('bookmark'),
+      $container->get('cache_tags.invalidator')
     );
   }
 
@@ -151,6 +159,9 @@ class BookmarkForm extends ContentEntityForm {
       $response->addCommand(new ReplaceCommand('[data-bookmark-entity-id="' . $this->targetEntity->id() . '"]', $link));
       $response->addCommand(new CloseModalDialogCommand());
     }
+
+    // expire the node cache because the link will change.
+    $this->cacheTagsInvalidator->invalidateTags(["node:{$this->targetEntity->id()}"]);
     return $response;
   }
 

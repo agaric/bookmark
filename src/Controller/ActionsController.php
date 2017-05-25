@@ -5,6 +5,7 @@ namespace Drupal\bookmark\Controller;
 use Drupal\bookmark\entity\Bookmark;
 use Drupal\bookmark\BookmarkServiceInterface;
 use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
@@ -35,12 +36,18 @@ class ActionsController extends ControllerBase {
   protected $bookmarkService;
 
   /**
+   * @var CacheTagsInvalidatorInterface
+   */
+  protected $cacheTagsInvalidator;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(RequestStack $request_stack, AccountProxy $current_user, BookmarkServiceInterface $bookmark_service) {
+  public function __construct(RequestStack $request_stack, AccountProxy $current_user, BookmarkServiceInterface $bookmark_service, CacheTagsInvalidatorInterface $cache_tags_invalidator) {
     $this->requestStack = $request_stack;
     $this->currentUser = $current_user;
     $this->bookmarkService = $bookmark_service;
+    $this->cacheTagsInvalidator = $cache_tags_invalidator;
   }
 
   /**
@@ -50,7 +57,8 @@ class ActionsController extends ControllerBase {
     return new static(
       $container->get('request_stack'),
       $container->get('current_user'),
-      $container->get('bookmark')
+      $container->get('bookmark'),
+      $container->get('cache_tags.invalidator')
     );
   }
 
@@ -81,6 +89,9 @@ class ActionsController extends ControllerBase {
     }
     $link = $this->bookmarkService->generateAddLink($bookmarkType, $entity);
     $response->addCommand(new ReplaceCommand('[data-bookmark-entity-id="' . $entity->id() . '"]', $link));
+
+    // expire the node cache because the link will change.
+    $this->cacheTagsInvalidator->invalidateTags(["node:{$entity->id()}"]);
     return $response;
   }
 
