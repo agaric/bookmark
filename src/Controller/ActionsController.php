@@ -5,7 +5,9 @@ namespace Drupal\bookmark\Controller;
 use Drupal\bookmark\entity\Bookmark;
 use Drupal\bookmark\BookmarkServiceInterface;
 use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\InvokeCommand;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Session\AccountProxy;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -34,12 +36,20 @@ class ActionsController extends ControllerBase {
   protected $bookmarkService;
 
   /**
+   * The renderer service.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(RequestStack $request_stack, AccountProxy $current_user, BookmarkServiceInterface $bookmark_service) {
+  public function __construct(RequestStack $request_stack, AccountProxy $current_user, BookmarkServiceInterface $bookmark_service, RendererInterface $renderer) {
     $this->requestStack = $request_stack;
     $this->currentUser = $current_user;
     $this->bookmarkService = $bookmark_service;
+    $this->renderer = $renderer;
   }
 
   /**
@@ -49,7 +59,8 @@ class ActionsController extends ControllerBase {
     return new static(
       $container->get('request_stack'),
       $container->get('current_user'),
-      $container->get('bookmark')
+      $container->get('bookmark'),
+      $container->get('renderer')
     );
   }
 
@@ -65,24 +76,21 @@ class ActionsController extends ControllerBase {
    */
   public function delete($bookmark_id) {
     $bookmark = Bookmark::load($bookmark_id);
-    $entity_type_id = $bookmark->bundle();
     $bookmark_uri = (isset($bookmark->get('url')->getValue()[0]['uri'])) ? $bookmark->get('url')->getValue()[0]['uri'] : '';
     $entity_id = (!empty($bookmark_uri)) ? str_replace('entity:node/', '', $bookmark_uri) : 0;
-    $bookmarkType = $this->bookmarkService->getBookmarkTypeById($entity_type_id);
+    $entity = Node::load($entity_id);
+    $bookmarkType = $this->bookmarkService->getBookmarkTypeById($bookmark->bundle());
 
     $response = new AjaxResponse();
-    $arguments[0] = 'success';
-    $arguments[1] = $entity_id;
     // Check that the user is owner of this bookmark before to try to delete it.
     if ($this->currentUser->id() != $bookmark->getOwnerId()) {
-      $arguments[2] = 'An error occurred';
-      return $response;
+      // @todo handle errors.
     }
     if (!$bookmark->delete()) {
-      $arguments[2] = 'An error occurred';
+      // @todo handle errors.
     }
-    $arguments[2] = $bookmarkType->getLinkText();
-    $response->addCommand(new InvokeCommand(NULL, 'deleteBookmark', $arguments));
+    $link = $this->bookmarkService->generateAddLink($bookmarkType, $entity);
+    $response->addCommand(new ReplaceCommand('[data-bookmark-entity-id="' . $entity->id() . '"]', $this->renderer->renderPlain($link)));
     return $response;
   }
 

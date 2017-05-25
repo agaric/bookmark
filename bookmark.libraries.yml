@@ -1,6 +1,0 @@
-bookmark.dialog:
-  version: VERSION
-  js:
-    js/bookmark.dialog.js: {}
-  dependencies:
-    - core/drupal.dialog.ajax

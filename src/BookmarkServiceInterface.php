@@ -43,7 +43,7 @@ interface BookmarkServiceInterface {
   /**
    * Generate a link to remove the bookmark.
    *
-   * @param \Drupal\bookmark\Entity\BookmarkTypeInterface $bookmark_id
+   * @param int $bookmark_id
    *   Bookmark Id
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   Entity where the link will be displayed.

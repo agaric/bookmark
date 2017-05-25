@@ -112,6 +112,7 @@ class BookmarkService implements BookmarkServiceInterface {
     $url = Url::fromRoute('bookmark.actions_controller_delete', ['bookmark_id' => $bookmark_id]);
     $build = [
       '#type' => 'link',
+      // @todo this title should be configurable.
       '#title' => 'Remove from my bookmarks',
       '#url' => $url,
       '#attributes' => [
