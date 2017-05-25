@@ -8,7 +8,6 @@ use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\ReplaceCommand;
-use Drupal\Core\Render\RendererInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\node\Entity\Node;
@@ -36,20 +35,12 @@ class BookmarkForm extends ContentEntityForm {
   var $bookmarkService;
 
   /**
-   * The renderer service.
-   *
-   * @var \Drupal\Core\Render\RendererInterface
-   */
-  protected $renderer;
-
-  /**
    * {@inheritdoc}
    */
-  public function __construct($entity_manager, $entity_type_bundle_info = NULL, $time = NULL, RequestStack $request_stack, BookmarkServiceInterface $bookmark_service, RendererInterface $renderer) {
+  public function __construct($entity_manager, $entity_type_bundle_info = NULL, $time = NULL, RequestStack $request_stack, BookmarkServiceInterface $bookmark_service) {
     parent::__construct($entity_manager, $entity_type_bundle_info = NULL, $time = NULL);
     $this->requestStack = $request_stack;
     $this->bookmarkService = $bookmark_service;
-    $this->renderer = $renderer;
   }
 
   /**
@@ -61,8 +52,7 @@ class BookmarkForm extends ContentEntityForm {
       $container->get('entity_type.bundle.info'),
       $container->get('datetime.time'),
       $container->get('request_stack'),
-      $container->get('bookmark'),
-      $container->get('renderer')
+      $container->get('bookmark')
     );
   }
 
@@ -158,7 +148,7 @@ class BookmarkForm extends ContentEntityForm {
     }
     else {
       $link = $this->bookmarkService->generateDeleteLink($this->entity->id(), $this->targetEntity);
-      $response->addCommand(new ReplaceCommand('[data-bookmark-entity-id="' . $this->targetEntity->id() . '"]', $this->renderer->renderPlain($link)));
+      $response->addCommand(new ReplaceCommand('[data-bookmark-entity-id="' . $this->targetEntity->id() . '"]', $link));
       $response->addCommand(new CloseModalDialogCommand());
     }
     return $response;

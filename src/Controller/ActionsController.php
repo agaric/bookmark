@@ -6,7 +6,6 @@ use Drupal\bookmark\entity\Bookmark;
 use Drupal\bookmark\BookmarkServiceInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\node\Entity\Node;
-use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Session\AccountProxy;
@@ -36,20 +35,12 @@ class ActionsController extends ControllerBase {
   protected $bookmarkService;
 
   /**
-   * The renderer service.
-   *
-   * @var \Drupal\Core\Render\RendererInterface
-   */
-  protected $renderer;
-
-  /**
    * {@inheritdoc}
    */
-  public function __construct(RequestStack $request_stack, AccountProxy $current_user, BookmarkServiceInterface $bookmark_service, RendererInterface $renderer) {
+  public function __construct(RequestStack $request_stack, AccountProxy $current_user, BookmarkServiceInterface $bookmark_service) {
     $this->requestStack = $request_stack;
     $this->currentUser = $current_user;
     $this->bookmarkService = $bookmark_service;
-    $this->renderer = $renderer;
   }
 
   /**
@@ -59,8 +50,7 @@ class ActionsController extends ControllerBase {
     return new static(
       $container->get('request_stack'),
       $container->get('current_user'),
-      $container->get('bookmark'),
-      $container->get('renderer')
+      $container->get('bookmark')
     );
   }
 
@@ -90,7 +80,7 @@ class ActionsController extends ControllerBase {
       // @todo handle errors.
     }
     $link = $this->bookmarkService->generateAddLink($bookmarkType, $entity);
-    $response->addCommand(new ReplaceCommand('[data-bookmark-entity-id="' . $entity->id() . '"]', $this->renderer->renderPlain($link)));
+    $response->addCommand(new ReplaceCommand('[data-bookmark-entity-id="' . $entity->id() . '"]', $link));
     return $response;
   }
 
