@@ -6,6 +6,8 @@ use Drupal\bookmark\entity\Bookmark;
 use Drupal\bookmark\BookmarkServiceInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
@@ -101,10 +103,17 @@ class ActionsController extends ControllerBase {
   public function myBookmarks() {
     // @todo use a view instead of this method.
     $bookmarks = $this->bookmarkService->getAllBookmarksByUser($this->currentUser->id());
+    $content = [];
+    foreach ($bookmarks as $key => $bookmark) {
+      $url = $bookmark->get('url')->getValue();
+      $content[$key]['bookmark'] = $bookmark;
+      $content[$key]['link'] = Link::fromTextAndUrl($bookmark->label(), Url::fromUri($url[0]['uri']));
+      $content[$key]['delete'] = Link::createFromRoute('Delete', 'entity.bookmark.delete_form', ['bookmark' => $bookmark->id()]);
+    }
 
     return [
       '#theme' => 'bookmarks_list',
-      '#bookmarks' => $bookmarks,
+      '#bookmarks' => $content,
       'pager' => [
         '#theme' => 'pager',
         '#weight' => 10,

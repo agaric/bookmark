@@ -17,10 +17,29 @@
 #}
 <div{{ attributes.addClass('bookmarks') }}>
   {% if bookmarks %}
-    <ul>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            Title
+          </th>
+          <th>
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody>
       {% for bookmark in bookmarks %}
-        <li>{{ bookmark.id() }} - {{ bookmark.label() }}</li>
+        <tr>
+          <td>
+            {{ bookmark.link }}
+          </td>
+          <td>
+            {{ bookmark.delete }}
+          </td>
+        </tr>
       {% endfor %}
-    </ul>
+      </tbody>
+    </table>
   {% endif %}
 </div>
