@@ -1,7 +1,7 @@
 bookmark.actions_controller_delete:
-  path: '/bookmark/delete/{bookmark_id}'
+  path: '/bookmark/ajax/delete/{bookmark_id}'
   defaults:
-    _controller: '\Drupal\bookmark\Controller\ActionsController::delete'
+    _controller: '\Drupal\bookmark\Controller\ActionsController::ajaxLinkDelete'
     _title: 'delete'
   requirements:
     _permission: 'access content'
@@ -10,6 +10,14 @@ bookmark.actions_controller_my_bookmarks:
   path: '/my-bookmarks'
   defaults:
     _controller: '\Drupal\bookmark\Controller\ActionsController::myBookmarks'
+    _title: 'My Bookmarks'
+  requirements:
+    _permission: 'access content'
+
+bookmark.actions_controller_delete_link:
+  path: '/my-bookmarks/{bookmark_id}'
+  defaults:
+    _controller: '\Drupal\bookmark\Controller\ActionsController::linkDelete'
     _title: 'My Bookmarks'
   requirements:
     _permission: 'access content'

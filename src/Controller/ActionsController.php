@@ -65,16 +65,14 @@ class ActionsController extends ControllerBase {
   }
 
   /**
-   * Delete action.
+   * Delete Ajax action, return the link to let the user add again the bookmark.
    *
-   * Remove a bookmark.
-   *
-   * @param String $bookmark_id
+   * @param string $bookmark_id
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   Return ajax Response.
    */
-  public function delete($bookmark_id) {
+  public function ajaxLinkDelete($bookmark_id) {
     $bookmark = Bookmark::load($bookmark_id);
     $bookmark_uri = (isset($bookmark->get('url')->getValue()[0]['uri'])) ? $bookmark->get('url')->getValue()[0]['uri'] : '';
     $entity_id = (!empty($bookmark_uri)) ? str_replace('entity:node/', '', $bookmark_uri) : 0;
@@ -83,18 +81,40 @@ class ActionsController extends ControllerBase {
 
     $response = new AjaxResponse();
     // Check that the user is owner of this bookmark before to try to delete it.
+    // @todo Can this be handled at BookmarkAccessControlHandler level?
     if ($this->currentUser->id() != $bookmark->getOwnerId()) {
-      // @todo handle errors.
+      // @todo handle errors
+      return;
     }
-    if (!$bookmark->delete()) {
-      // @todo handle errors.
-    }
+
+    $bookmark->delete();
     $link = $this->bookmarkService->generateAddLink($bookmarkType, $entity);
     $response->addCommand(new ReplaceCommand('[data-bookmark-entity-id="' . $entity->id() . '"]', $link));
 
     // expire the node cache because the link will change.
     $this->cacheTagsInvalidator->invalidateTags(["node:{$entity->id()}"]);
     return $response;
+  }
+
+  /**
+   * @param string $bookmark_id
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   A redirect response object
+   */
+  public function linkDelete($bookmark_id) {
+    $bookmark = Bookmark::load($bookmark_id);
+
+    // Check that the user is owner of this bookmark before to try to delete it.
+    // @todo Can this be handled at BookmarkAccessControlHandler level?
+    if ($this->currentUser->id() != $bookmark->getOwnerId()) {
+      drupal_set_message('You cannot delete this bookmark.', 'error');
+      return $this->redirect('bookmark.actions_controller_my_bookmarks');
+    }
+
+    $bookmark->delete();
+    drupal_set_message('The bookmark has been deleted.');
+    return $this->redirect('bookmark.actions_controller_my_bookmarks');
   }
 
   /**
@@ -108,7 +128,7 @@ class ActionsController extends ControllerBase {
       $url = $bookmark->get('url')->getValue();
       $content[$key]['bookmark'] = $bookmark;
       $content[$key]['link'] = Link::fromTextAndUrl($bookmark->label(), Url::fromUri($url[0]['uri']));
-      $content[$key]['delete'] = Link::createFromRoute('Delete', 'entity.bookmark.delete_form', ['bookmark' => $bookmark->id()]);
+      $content[$key]['delete'] = Link::createFromRoute('Delete', 'bookmark.actions_controller_delete_link', ['bookmark_id' => $bookmark->id()]);
     }
 
     return [
