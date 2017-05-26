@@ -73,7 +73,11 @@ class ActionsController extends ControllerBase {
    *   Return ajax Response.
    */
   public function ajaxLinkDelete($bookmark_id) {
-    $bookmark = Bookmark::load($bookmark_id);
+    if (($bookmark = Bookmark::load($bookmark_id)) == NULL) {
+      // @todo handle  errors.
+      return;
+    }
+
     $bookmark_uri = (isset($bookmark->get('url')->getValue()[0]['uri'])) ? $bookmark->get('url')->getValue()[0]['uri'] : '';
     $entity_id = (!empty($bookmark_uri)) ? str_replace('entity:node/', '', $bookmark_uri) : 0;
     $entity = Node::load($entity_id);
@@ -103,7 +107,11 @@ class ActionsController extends ControllerBase {
    *   A redirect response object
    */
   public function linkDelete($bookmark_id) {
-    $bookmark = Bookmark::load($bookmark_id);
+    if (($bookmark = Bookmark::load($bookmark_id)) == NULL) {
+      drupal_set_message('The bookmark does not exists.', ['warning']);
+      return $this->redirect('bookmark.actions_controller_my_bookmarks');
+    }
+
 
     // Check that the user is owner of this bookmark before to try to delete it.
     // @todo Can this be handled at BookmarkAccessControlHandler level?
