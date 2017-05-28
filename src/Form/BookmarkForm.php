@@ -21,22 +21,22 @@ use Drupal\node\Entity\Node;
 class BookmarkForm extends ContentEntityForm {
 
   /**
-   * @var RequestStack
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
-  var $requestStack;
+  public $requestStack;
 
   /**
    * @var \Drupal\Core\Entity\Entity
    */
-  var $targetEntity;
+  public $targetEntity;
 
   /**
    * @var \Drupal\bookmark\BookmarkServiceInterface
    */
-  var $bookmarkService;
+  public $bookmarkService;
 
   /**
-   * @var CacheTagsInvalidatorInterface
+   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface
    */
   protected $cacheTagsInvalidator;
 
@@ -111,8 +111,6 @@ class BookmarkForm extends ContentEntityForm {
     return parent::validateForm($form, $form_state);
   }
 
-
-
   /**
    * Doesn't save the bookmark, just close the modal window.
    *
@@ -145,12 +143,10 @@ class BookmarkForm extends ContentEntityForm {
       // @todo display any error correctly in the form.
       // Add a command to execute on form, jQuery .html() replaces content between tags.
       // In this case, we replace the desription with wheter the username was found or not.
-      //$response->addCommand(new HtmlCommand('input[name=name[0][value]', $text));
-
+      // $response->addCommand(new HtmlCommand('input[name=name[0][value]', $text));
       // Add a command, InvokeCommand, which allows for custom jQuery commands.
       // In this case, we alter the color of the description.
-      //$response->addCommand(new InvokeCommand('#edit-user-name--description', 'css', array('color', $color)));
-
+      // $response->addCommand(new InvokeCommand('#edit-user-name--description', 'css', array('color', $color)));
       // Return the AjaxResponse Object.
       return $response;
     }
@@ -160,7 +156,7 @@ class BookmarkForm extends ContentEntityForm {
       $response->addCommand(new CloseModalDialogCommand());
     }
 
-    // expire the node cache because the link will change.
+    // Expire the node cache because the link will change.
     $this->cacheTagsInvalidator->invalidateTags(["node:{$this->targetEntity->id()}"]);
     return $response;
   }

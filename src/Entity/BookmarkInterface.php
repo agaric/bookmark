@@ -11,7 +11,7 @@ use Drupal\user\EntityOwnerInterface;
  *
  * @ingroup bookmark
  */
-interface BookmarkInterface extends  ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
+interface BookmarkInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
 
   /**
    * Gets the Bookmark name.

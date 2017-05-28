@@ -38,7 +38,7 @@ class ActionsController extends ControllerBase {
   protected $bookmarkService;
 
   /**
-   * @var CacheTagsInvalidatorInterface
+   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface
    */
   protected $cacheTagsInvalidator;
 
@@ -95,7 +95,7 @@ class ActionsController extends ControllerBase {
     $link = $this->bookmarkService->generateAddLink($bookmarkType, $entity);
     $response->addCommand(new ReplaceCommand('[data-bookmark-entity-id="' . $entity->id() . '"]', $link));
 
-    // expire the node cache because the link will change.
+    // Expire the node cache because the link will change.
     $this->cacheTagsInvalidator->invalidateTags(["node:{$entity->id()}"]);
     return $response;
   }
@@ -111,7 +111,6 @@ class ActionsController extends ControllerBase {
       drupal_set_message('The bookmark does not exists.', ['warning']);
       return $this->redirect('bookmark.actions_controller_my_bookmarks');
     }
-
 
     // Check that the user is owner of this bookmark before to try to delete it.
     // @todo Can this be handled at BookmarkAccessControlHandler level?

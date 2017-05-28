@@ -14,15 +14,17 @@ use Drupal\Core\Url;
  */
 class BookmarkService implements BookmarkServiceInterface {
 
-  /*
-   * @var EntityTypeManagerInterface
-   * */
+  /**
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+
   private $entityTypeManager;
 
   /**
    * Drupal\Core\Session\AccountProxy definition.
    *
-   * @param EntityTypeManagerInterface $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    */
   protected $current_user;
 
@@ -57,7 +59,7 @@ class BookmarkService implements BookmarkServiceInterface {
     $query->condition('user_id', $user_id);
     $query->pager();
     $ids = $query->execute();
-    $bookmarks = array_map(function($id) {
+    $bookmarks = array_map(function ($id) {
       return $this->entityTypeManager->getStorage('bookmark')->load($id);
     }, $ids);
     return $bookmarks;
@@ -141,4 +143,5 @@ class BookmarkService implements BookmarkServiceInterface {
 
     return $build;
   }
+
 }

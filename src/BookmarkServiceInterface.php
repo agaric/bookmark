@@ -32,6 +32,7 @@ interface BookmarkServiceInterface {
    * Return the bookmarks of an specific user.
    *
    * @param int $user_id
+   *
    * @return \Drupal\Core\Entity\EntityInterface[]
    */
   public function getAllBookmarksByUser($user_id);
@@ -40,7 +41,7 @@ interface BookmarkServiceInterface {
    * Generate the link to bookmark an entity (Delete or an Add).
    *
    * @param \Drupal\bookmark\Entity\BookmarkTypeInterface $bookmarkType
-   *   BookmarkType Object
+   *   BookmarkType Object.
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *
    * @return array
@@ -52,7 +53,7 @@ interface BookmarkServiceInterface {
    * Generate a link to remove the bookmark.
    *
    * @param int $bookmark_id
-   *   Bookmark Id
+   *   Bookmark Id.
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   Entity where the link will be displayed.
    * @param array
@@ -66,7 +67,7 @@ interface BookmarkServiceInterface {
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   Entity where the link will be displayed.
    * @param \Drupal\bookmark\Entity\BookmarkTypeInterface $bookmarkType
-   *   BookmarkType Object
+   *   BookmarkType Object.
    * @param array
    *   Return a rendereable array with the link.
    */

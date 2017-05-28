@@ -15,4 +15,3 @@ entity.bookmark_type.collection:
   description: 'List bookmark type (bundles)'
   parent: system.admin_structure
   weight: 99
-

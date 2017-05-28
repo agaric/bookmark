@@ -3,7 +3,6 @@
 namespace Drupal\bookmark\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
-use Drupal\Core\Session\AccountInterface;
 
 /**
  * Provides an interface for defining Bookmark type entities.
@@ -21,7 +20,7 @@ interface BookmarkTypeInterface extends ConfigEntityInterface {
    * Set the link_text.
    *
    * @param string $link_text
-   *  Link Text.
+   *   Link Text.
    */
   public function setLinkText($link_text);
 

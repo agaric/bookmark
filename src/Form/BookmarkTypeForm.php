@@ -17,7 +17,7 @@ class BookmarkTypeForm extends EntityForm {
   /**
    * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface;
+   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
    */
   protected $bundleInfoService;
 
@@ -97,7 +97,6 @@ class BookmarkTypeForm extends EntityForm {
       '#weight' => 10,
       '#description' => $this->t('Check any content type where you want to display a link to bookmark content.'),
     ];
-
 
     return $form;
   }

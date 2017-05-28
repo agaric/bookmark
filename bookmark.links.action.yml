@@ -8,4 +8,3 @@ entity.bookmark_type.add_form:
   title: 'Add Bookmark type'
   appears_on:
     - entity.bookmark_type.collection
-

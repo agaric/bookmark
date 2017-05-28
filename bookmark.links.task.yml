@@ -15,4 +15,3 @@ entity.bookmark.delete_form:
   base_route:  entity.bookmark.canonical
   title: Delete
   weight: 10
-

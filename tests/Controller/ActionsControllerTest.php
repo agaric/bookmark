@@ -3,7 +3,6 @@
 namespace Drupal\bookmark\Tests;
 
 use Drupal\simpletest\WebTestBase;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Provides automated tests for the bookmark module.
@@ -16,6 +15,7 @@ class ActionsControllerTest extends WebTestBase {
    * @var Symfony\Component\HttpFoundation\RequestStack
    */
   protected $request_stack;
+
   /**
    * {@inheritdoc}
    */
