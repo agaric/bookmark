@@ -23,21 +23,29 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class ActionsController extends ControllerBase {
 
   /**
+   * RequestStack Object.
+   *
    * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected $requestStack;
 
   /**
+   * Current User.
+   *
    * @var \Drupal\Core\Session\AccountProxy
    */
   protected $currentUser;
 
   /**
-   * @var \Drupal\bookmark\BookmarkLinkBuilderInterface
+   * Bookmark Service.
+   *
+   * @var \Drupal\bookmark\BookmarkServiceInterface
    */
   protected $bookmarkService;
 
   /**
+   * CacheTagInvalidator service.
+   *
    * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface
    */
   protected $cacheTagsInvalidator;
@@ -67,7 +75,8 @@ class ActionsController extends ControllerBase {
   /**
    * Delete Ajax action, return the link to let the user add again the bookmark.
    *
-   * @param string $bookmark_id
+   * @param int $bookmark_id
+   *   Bookmark Id.
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   Return ajax Response.
@@ -75,7 +84,7 @@ class ActionsController extends ControllerBase {
   public function ajaxLinkDelete($bookmark_id) {
     if (($bookmark = Bookmark::load($bookmark_id)) == NULL) {
       // @todo handle  errors.
-      return;
+      return $this->redirect('/');
     }
 
     $bookmark_uri = (isset($bookmark->get('url')->getValue()[0]['uri'])) ? $bookmark->get('url')->getValue()[0]['uri'] : '';
@@ -88,7 +97,7 @@ class ActionsController extends ControllerBase {
     // @todo Can this be handled at BookmarkAccessControlHandler level?
     if ($this->currentUser->id() != $bookmark->getOwnerId()) {
       // @todo handle errors
-      return;
+      return $this->redirect('/');
     }
 
     $bookmark->delete();
@@ -101,7 +110,10 @@ class ActionsController extends ControllerBase {
   }
 
   /**
-   * @param string $bookmark_id
+   * Delete the bookmark entity (used in the my-bookmarks page).
+   *
+   * @param int $bookmark_id
+   *   Bookmark Id.
    *
    * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   A redirect response object

@@ -13,6 +13,7 @@ interface BookmarkTypeInterface extends ConfigEntityInterface {
    * Get the link_text.
    *
    * @return string
+   *   Return the text which will be displayed in the link.
    */
   public function getLinkText();
 
@@ -33,13 +34,15 @@ interface BookmarkTypeInterface extends ConfigEntityInterface {
    * Set the bundles property.
    *
    * @param array $bundles
+   *   The bundles allowed in this bookmarkType.
    */
-  public function setBundles($bundles);
+  public function setBundles(array $bundles);
 
   /**
    * Return the bundles where this bookmarktype can be used.
    *
    * @return array
+   *   Get all the bundles allowed for this bookmarkType.
    */
   public function getApplicableBundles();
 

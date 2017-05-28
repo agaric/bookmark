@@ -12,9 +12,9 @@ class ActionsControllerTest extends WebTestBase {
   /**
    * Symfony\Component\HttpFoundation\RequestStack definition.
    *
-   * @var Symfony\Component\HttpFoundation\RequestStack
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
-  protected $request_stack;
+  protected $requestStack;
 
   /**
    * {@inheritdoc}
@@ -25,13 +25,6 @@ class ActionsControllerTest extends WebTestBase {
       'description' => 'Test Unit for module bookmark and controller ActionsController.',
       'group' => 'Other',
     );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setUp() {
-    parent::setUp();
   }
 
   /**

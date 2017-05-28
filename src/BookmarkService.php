@@ -3,8 +3,8 @@
 namespace Drupal\bookmark;
 
 use Drupal\bookmark\Entity\BookmarkTypeInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
 
 /**
@@ -15,25 +15,17 @@ use Drupal\Core\Url;
 class BookmarkService implements BookmarkServiceInterface {
 
   /**
+   * EntityTypeManager object.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-
   private $entityTypeManager;
-
-  /**
-   * Drupal\Core\Session\AccountProxy definition.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   */
-  protected $current_user;
 
   /**
    * Constructor.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, AccountProxy $current_user) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
     $this->entityTypeManager = $entity_type_manager;
-    $this->current_user = $current_user;
   }
 
   /**
@@ -75,7 +67,7 @@ class BookmarkService implements BookmarkServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function generateLink($bookmarkType, $entity) {
+  public function generateLink(BookmarkTypeInterface $bookmarkType, EntityInterface $entity) {
     $bookmarks = $this->entityTypeManager->getStorage('bookmark')->getQuery();
     $bookmarks->condition('url__uri', 'entity:node/' . $entity->id());
     $bookmarks->condition('type', $bookmarkType->id());

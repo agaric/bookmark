@@ -24,8 +24,8 @@ class BookmarkTypeForm extends EntityForm {
   /**
    * Constructs a new form.
    *
-   * @param \Drupal\flag\ActionLink\ActionLinkPluginManager $action_link_manager
-   *   The link type plugin manager.
+   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $bundle_info_service
+   *   EntityTypeBundleInfo Service.
    */
   public function __construct(EntityTypeBundleInfoInterface $bundle_info_service) {
     $this->bundleInfoService = $bundle_info_service;

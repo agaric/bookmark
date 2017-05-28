@@ -21,21 +21,29 @@ use Drupal\node\Entity\Node;
 class BookmarkForm extends ContentEntityForm {
 
   /**
+   * RequestStack Service.
+   *
    * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   public $requestStack;
 
   /**
-   * @var \Drupal\Core\Entity\Entity
+   * The entity where the bookmark will be applied.
+   *
+   * @var \Drupal\Core\Entity\EntityInterface
    */
   public $targetEntity;
 
   /**
+   * Bookmark Service.
+   *
    * @var \Drupal\bookmark\BookmarkServiceInterface
    */
   public $bookmarkService;
 
   /**
+   * CacheTagsInvalidator Service.
+   *
    * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface
    */
   protected $cacheTagsInvalidator;
@@ -43,7 +51,7 @@ class BookmarkForm extends ContentEntityForm {
   /**
    * {@inheritdoc}
    */
-  public function __construct($entity_manager, $entity_type_bundle_info = NULL, $time = NULL, RequestStack $request_stack, BookmarkServiceInterface $bookmark_service, CacheTagsInvalidatorInterface $cache_tags_invalidator) {
+  public function __construct($entity_manager, RequestStack $request_stack, BookmarkServiceInterface $bookmark_service, CacheTagsInvalidatorInterface $cache_tags_invalidator, $entity_type_bundle_info = NULL, $time = NULL) {
     parent::__construct($entity_manager, $entity_type_bundle_info = NULL, $time = NULL);
     $this->requestStack = $request_stack;
     $this->bookmarkService = $bookmark_service;
@@ -56,11 +64,11 @@ class BookmarkForm extends ContentEntityForm {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity.manager'),
-      $container->get('entity_type.bundle.info'),
-      $container->get('datetime.time'),
       $container->get('request_stack'),
       $container->get('bookmark'),
-      $container->get('cache_tags.invalidator')
+      $container->get('cache_tags.invalidator'),
+      $container->get('entity_type.bundle.info'),
+      $container->get('datetime.time')
     );
   }
 
@@ -104,20 +112,15 @@ class BookmarkForm extends ContentEntityForm {
   }
 
   /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    // @todo Validate the form and make it compatible with the ajax submit.
-    return parent::validateForm($form, $form_state);
-  }
-
-  /**
    * Doesn't save the bookmark, just close the modal window.
    *
    * @param array $form
+   *   The Bookmark Form.
    * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   FormState object.
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
+   *   Return an AjaxResponse.
    */
   public function cancelAjaxSubmit(array &$form, FormStateInterface $formState) {
     $response = new AjaxResponse();
@@ -129,9 +132,12 @@ class BookmarkForm extends ContentEntityForm {
    * Save the bookmark.
    *
    * @param array $form
+   *   The BookmarkForm.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The FormState Object.
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
+   *   Return an Ajax response.
    */
   public function ajaxSubmit(array &$form, FormStateInterface $form_state) {
     $entity = &$this->entity;
@@ -141,13 +147,6 @@ class BookmarkForm extends ContentEntityForm {
 
     if ($form_state->getErrors()) {
       // @todo display any error correctly in the form.
-      // Add a command to execute on form, jQuery .html() replaces content between tags.
-      // In this case, we replace the desription with wheter the username was found or not.
-      // $response->addCommand(new HtmlCommand('input[name=name[0][value]', $text));
-      // Add a command, InvokeCommand, which allows for custom jQuery commands.
-      // In this case, we alter the color of the description.
-      // $response->addCommand(new InvokeCommand('#edit-user-name--description', 'css', array('color', $color)));
-      // Return the AjaxResponse Object.
       return $response;
     }
     else {
