@@ -87,7 +87,8 @@ class ActionsController extends ControllerBase {
       return $this->redirect('/');
     }
 
-    $bookmark_uri = (isset($bookmark->get('url')->getValue()[0]['uri'])) ? $bookmark->get('url')->getValue()[0]['uri'] : '';
+    $url = $bookmark->get('url')->getValue();
+    $bookmark_uri = (isset($url[0]['uri'])) ? $bookmark->get('url')->getValue()[0]['uri'] : '';
     $entity_id = (!empty($bookmark_uri)) ? str_replace('entity:node/', '', $bookmark_uri) : 0;
     $entity = Node::load($entity_id);
     $bookmarkType = $this->bookmarkService->getBookmarkTypeById($bookmark->bundle());
