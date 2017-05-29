@@ -46,9 +46,9 @@ class BookmarkService implements BookmarkServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function getAllBookmarksByUser($user_id) {
+  public function getAllBookmarksByUser($uid) {
     $query = $this->entityTypeManager->getStorage('bookmark')->getQuery();
-    $query->condition('user_id', $user_id);
+    $query->condition('uid', $uid);
     $query->pager();
     $ids = $query->execute();
     $bookmarks = array_map(function ($id) {
@@ -85,7 +85,7 @@ class BookmarkService implements BookmarkServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function generateAddLink($bookmarkType, $entity) {
+  public function generateAddLink(BookmarkTypeInterface $bookmarkType, EntityInterface $entity) {
     /** @var \Drupal\Core\Url $url */
     $url = Url::fromRoute('entity.bookmark.add_form', ['bookmark_type' => $bookmarkType->id()]);
     $url->setOption('query', ['entity_id' => $entity->id()]);
@@ -115,7 +115,7 @@ class BookmarkService implements BookmarkServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function generateDeleteLink($bookmark_id, $entity) {
+  public function generateDeleteLink($bookmark_id, EntityInterface $entity) {
     $url = Url::fromRoute('bookmark.actions_controller_delete', ['bookmark_id' => $bookmark_id]);
     $build = [
       '#type' => 'link',

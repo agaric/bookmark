@@ -37,13 +37,13 @@ interface BookmarkServiceInterface {
   /**
    * Return the bookmarks of an specific user.
    *
-   * @param int $user_id
+   * @param int $uid
    *   User's id.
    *
    * @return \Drupal\Core\Entity\EntityInterface[]
    *   Return all the user's bookmark.
    */
-  public function getAllBookmarksByUser($user_id);
+  public function getAllBookmarksByUser($uid);
 
   /**
    * Generate the link to bookmark an entity (Delete or an Add).

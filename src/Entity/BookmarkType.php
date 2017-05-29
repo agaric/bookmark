@@ -94,7 +94,7 @@ class BookmarkType extends ConfigEntityBundleBase implements bookmarkTypeInterfa
   /**
    * {@inheritdoc}
    */
-  public function setBundles($bundles) {
+  public function setBundles(array $bundles) {
     $this->link_text = $bundles;
   }
 
