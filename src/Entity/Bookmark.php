@@ -60,7 +60,7 @@ use Drupal\user\UserInterface;
  *   field_ui_base_route = "entity.bookmark_type.edit_form"
  * )
  */
-class Bookmark extends ContentEntityBase implements bookmarkInterface {
+class Bookmark extends ContentEntityBase implements BookmarkInterface {
 
   use EntityChangedTrait;
 
