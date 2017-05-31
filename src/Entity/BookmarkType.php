@@ -38,7 +38,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *   }
  * )
  */
-class BookmarkType extends ConfigEntityBundleBase implements bookmarkTypeInterface {
+class BookmarkType extends ConfigEntityBundleBase implements BookmarkTypeInterface {
 
   /**
    * The Bookmark type ID.
