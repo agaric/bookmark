@@ -11,14 +11,14 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *   id = "bookmark_type",
  *   label = @Translation("Bookmark type"),
  *   handlers = {
- *     "list_builder" = "Drupal\bookmark\bookmarkTypeListBuilder",
+ *     "list_builder" = "Drupal\bookmark\BookmarkTypeListBuilder",
  *     "form" = {
- *       "add" = "Drupal\bookmark\Form\bookmarkTypeForm",
- *       "edit" = "Drupal\bookmark\Form\bookmarkTypeForm",
- *       "delete" = "Drupal\bookmark\Form\bookmarkTypeDeleteForm"
+ *       "add" = "Drupal\bookmark\Form\BookmarkTypeForm",
+ *       "edit" = "Drupal\bookmark\Form\BookmarkTypeForm",
+ *       "delete" = "Drupal\bookmark\Form\BookmarkTypeDeleteForm"
  *     },
  *     "route_provider" = {
- *       "html" = "Drupal\bookmark\bookmarkTypeHtmlRouteProvider",
+ *       "html" = "Drupal\bookmark\BookmarkTypeHtmlRouteProvider",
  *     },
  *   },
  *   config_prefix = "bookmark_type",

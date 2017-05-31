@@ -21,18 +21,18 @@ use Drupal\user\UserInterface;
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\bookmark\BookmarkListBuilder",
- *     "views_data" = "Drupal\bookmark\Entity\bookmarkViewsData",
+ *     "views_data" = "Drupal\bookmark\Entity\BookmarkViewsData",
  *     "translation" = "Drupal\bookmark\BookmarkTranslationHandler",
  *
  *     "form" = {
- *       "default" = "Drupal\bookmark\Form\bookmarkForm",
- *       "add" = "Drupal\bookmark\Form\bookmarkForm",
- *       "edit" = "Drupal\bookmark\Form\bookmarkForm",
- *       "delete" = "Drupal\bookmark\Form\bookmarkDeleteForm",
+ *       "default" = "Drupal\bookmark\Form\BookmarkForm",
+ *       "add" = "Drupal\bookmark\Form\BookmarkForm",
+ *       "edit" = "Drupal\bookmark\Form\BookmarkForm",
+ *       "delete" = "Drupal\bookmark\Form\BookmarkDeleteForm",
  *     },
- *     "access" = "Drupal\bookmark\bookmarkAccessControlHandler",
+ *     "access" = "Drupal\bookmark\BookmarkAccessControlHandler",
  *     "route_provider" = {
- *       "html" = "Drupal\bookmark\bookmarkHtmlRouteProvider",
+ *       "html" = "Drupal\bookmark\BookmarkHtmlRouteProvider",
  *     },
  *   },
  *   base_table = "bookmark",
