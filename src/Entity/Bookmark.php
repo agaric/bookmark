@@ -7,6 +7,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Url;
 use Drupal\user\UserInterface;
 
 /**
@@ -72,6 +73,22 @@ class Bookmark extends ContentEntityBase implements BookmarkInterface {
     $values += [
       'uid' => \Drupal::currentUser()->id(),
     ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  function preSave(EntityStorageInterface $storage) {
+    parent::preSave($storage);
+    $url = $this->get('url')->getValue();
+    $name = Url::fromUri($url[0]['uri']);
+    $name->setAbsolute(TRUE);
+    $this->setName($name->toString());
+
+    // If It is not empty the title lets use it for the entity label.
+    if (!empty($url[0]['title'])) {
+      $this->setName($url[0]['title']);
+    }
   }
 
   /**
@@ -168,19 +185,7 @@ class Bookmark extends ContentEntityBase implements BookmarkInterface {
       ->setSettings([
         'max_length' => 50,
         'text_processing' => 0,
-      ])
-      ->setDefaultValue('')
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -4,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'string_textfield',
-        'weight' => -4,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+      ]);
 
     $fields['url'] = BaseFieldDefinition::create('link')
       ->setLabel(t('Url'))
@@ -189,6 +194,7 @@ class Bookmark extends ContentEntityBase implements BookmarkInterface {
         'max_length' => 50,
         'text_processing' => 0,
       ])
+      ->setRequired(TRUE)
       ->setDefaultValue('')
       ->setDisplayOptions('view', [
         'label' => 'above',
