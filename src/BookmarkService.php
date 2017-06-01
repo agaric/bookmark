@@ -88,7 +88,7 @@ class BookmarkService implements BookmarkServiceInterface {
   public function generateAddLink(BookmarkTypeInterface $bookmarkType, EntityInterface $entity) {
     /** @var \Drupal\Core\Url $url */
     $url = Url::fromRoute('entity.bookmark.add_form', ['bookmark_type' => $bookmarkType->id()]);
-    $url->setOption('query', ['entity_id' => $entity->id()]);
+    $url->setOption('query', ['entity_id' => $entity->id(), 'use_ajax' => 1]);
     $build = [
       '#type' => 'link',
       '#title' => $bookmarkType->getLinkText(),

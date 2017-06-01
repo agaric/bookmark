@@ -7,6 +7,7 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Entity\ContentEntityForm;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -95,18 +96,22 @@ class BookmarkForm extends ContentEntityForm {
       $form['url']['widget'][0]['uri']['#attributes']['readonly'] = 'readonly';
     }
 
-    // Ajax Modal.
-    $form['actions']['submit']['#submit'] = [];
-    $form['actions']['submit']['#ajax'] = [
-      'callback' => '::ajaxSubmit',
-      'event' => 'click',
-    ];
-    $form['actions']['cancel'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Cancel'),
-      '#submit' => [],
-      '#ajax' => ['callback' => '::cancelAjaxSubmit', 'event' => 'click'],
-    ];
+    if (isset($query['use_ajax']) && $query['use_ajax']) {
+      // Ajax Modal.
+      $form['actions']['submit']['#submit'] = [];
+      $form['actions']['submit']['#ajax'] = [
+        'callback' => '::ajaxSubmit',
+        'event' => 'click',
+      ];
+      $form['actions']['cancel'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Cancel'),
+        '#submit' => [],
+        '#ajax' => ['callback' => '::cancelAjaxSubmit', 'event' => 'click'],
+      ];
+    } else {
+      $form['actions']['submit']['#submit'] = ['::noAjaxSubmit'];
+    }
 
     return $form;
   }
@@ -129,6 +134,31 @@ class BookmarkForm extends ContentEntityForm {
   }
 
   /**
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   */
+  public function save(array $form, FormStateInterface $form_state) {
+    // Expire the node cache because the link will change.
+    if ($this->targetEntity instanceof  EntityInterface) {
+      $this->cacheTagsInvalidator->invalidateTags(["node:{$this->targetEntity->id()}"]);
+    }
+    return $status = parent::save($form, $form_state);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function noAjaxSubmit(array &$form, FormStateInterface $form_state) {
+    $this->submitForm($form, $form_state);
+    if ($this->save($form, $form_state)) {
+      drupal_set_message($this->t("The @bookmark_bundle has been saved correctly", ['@bookmark_bundle' => $this->entity->bundle()]));
+    } else {
+      drupal_set_message($this->t("There was a problem, please try again later."));
+    }
+    $form_state->setRedirect('entity.bookmark.collection');
+  }
+
+  /**
    * Save the bookmark.
    *
    * @param array $form
@@ -140,23 +170,11 @@ class BookmarkForm extends ContentEntityForm {
    *   Return an Ajax response.
    */
   public function ajaxSubmit(array &$form, FormStateInterface $form_state) {
-    $entity = &$this->entity;
-    $status = parent::save($form, $form_state);
-
+    $this->save($form, $form_state);
     $response = new AjaxResponse();
-
-    if ($form_state->getErrors()) {
-      // @todo display any error correctly in the form.
-      return $response;
-    }
-    else {
-      $link = $this->bookmarkService->generateDeleteLink($this->entity->id(), $this->targetEntity);
-      $response->addCommand(new ReplaceCommand('[data-bookmark-entity-id="' . $this->targetEntity->id() . '"]', $link));
-      $response->addCommand(new CloseModalDialogCommand());
-    }
-
-    // Expire the node cache because the link will change.
-    $this->cacheTagsInvalidator->invalidateTags(["node:{$this->targetEntity->id()}"]);
+    $link = $this->bookmarkService->generateDeleteLink($this->entity->id(), $this->targetEntity);
+    $response->addCommand(new ReplaceCommand('[data-bookmark-entity-id="' . $this->targetEntity->id() . '"]', $link));
+    $response->addCommand(new CloseModalDialogCommand());
     return $response;
   }
 
