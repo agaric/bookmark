@@ -12,6 +12,7 @@ use Drupal\node\Entity\Node;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Session\AccountProxy;
+use Drupal\user\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -141,8 +142,15 @@ class ActionsController extends ControllerBase {
    * My Bookmarks page.
    */
   public function myBookmarks() {
+    return $this->redirect('bookmark.actions_controller_user_bookmarks', ['user' => $this->currentUser->id()]);
+  }
+
+  /**
+   * @param \Drupal\user\Entity\User $user
+   */
+  public function userBookmarks(User $user) {
     // @todo use a view instead of this method.
-    $bookmarks = $this->bookmarkService->getAllBookmarksByUser($this->currentUser->id());
+    $bookmarks = $this->bookmarkService->getAllBookmarksByUser($user->id());
     $content = [];
     foreach ($bookmarks as $key => $bookmark) {
       $url = $bookmark->get('url')->getValue();
@@ -159,7 +167,6 @@ class ActionsController extends ControllerBase {
         '#weight' => 10,
       ],
     ];
-
   }
 
 }

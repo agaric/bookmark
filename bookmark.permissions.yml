@@ -20,3 +20,6 @@ view published bookmark entities:
 
 view unpublished bookmark entities:
   title: 'View unpublished bookmark entities'
+
+view other users bookmarks:
+  title: 'Access other users bookmarks'

@@ -20,3 +20,8 @@ bookmark.admin:
   title: Bookmarks
   route_name: entity.bookmark.collection
   base_route: system.admin_content
+
+bookmark.mybookmarks:
+  title: Bookmarks
+  route_name: bookmark.actions_controller_user_bookmarks
+  base_route: entity.user.canonical

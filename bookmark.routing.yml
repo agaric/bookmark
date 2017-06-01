@@ -14,6 +14,18 @@ bookmark.actions_controller_my_bookmarks:
   requirements:
     _permission: 'Access the bookmark overview page'
 
+bookmark.actions_controller_user_bookmarks:
+  path: '/user/{user}/bookmarks'
+  defaults:
+    _controller: '\Drupal\bookmark\Controller\ActionsController::userBookmarks'
+    _title: 'My Bookmarks'
+  requirements:
+    _permission: 'Access other users bookmarks'
+  options:
+    parameters:
+      user:
+        entity: user
+
 bookmark.actions_controller_delete_link:
   path: '/my-bookmarks/{bookmark_id}'
   defaults:
