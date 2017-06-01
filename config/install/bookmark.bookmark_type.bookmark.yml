@@ -1,0 +1,6 @@
+status: true
+dependencies: {  }
+id: bookmark
+label: Bookmark
+link_text: 'Bookmark this'
+bundles: {  }
