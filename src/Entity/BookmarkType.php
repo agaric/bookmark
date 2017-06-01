@@ -30,11 +30,11 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *     "uuid" = "uuid"
  *   },
  *   links = {
- *     "canonical" = "/admin/structure/bookmark_type/{bookmark_type}",
- *     "add-form" = "/admin/structure/bookmark_type/add",
- *     "edit-form" = "/admin/structure/bookmark_type/{bookmark_type}/edit",
- *     "delete-form" = "/admin/structure/bookmark_type/{bookmark_type}/delete",
- *     "collection" = "/admin/structure/bookmark_type"
+ *     "canonical" = "/admin/structure/bookmark/{bookmark_type}",
+ *     "add-form" = "/admin/structure/bookmark/add",
+ *     "edit-form" = "/admin/structure/bookmark/{bookmark_type}/edit",
+ *     "delete-form" = "/admin/structure/bookmark/{bookmark_type}/delete",
+ *     "collection" = "/admin/structure/bookmark"
  *   }
  * )
  */

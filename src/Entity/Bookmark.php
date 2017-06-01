@@ -51,11 +51,11 @@ use Drupal\user\UserInterface;
  *   },
  *   links = {
  *     "canonical" = "/bookmark/{bookmark}",
- *     "add-page" = "/admin/structure/bookmark/add",
- *     "add-form" = "/bookmark/add/{bookmark_type}",
+ *     "add-page" = "/admin/content/bookmark/add",
+ *     "add-form" = "/bookmark/content/add/{bookmark_type}",
  *     "edit-form" = "/bookmark/{bookmark}/edit",
  *     "delete-form" = "/bookmark/{bookmark}/delete",
- *     "collection" = "/admin/structure/bookmark",
+ *     "collection" = "/admin/content/bookmark",
  *   },
  *   bundle_entity_type = "bookmark_type",
  *   field_ui_base_route = "entity.bookmark_type.edit_form"
