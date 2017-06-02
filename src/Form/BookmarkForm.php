@@ -115,6 +115,9 @@ class BookmarkForm extends ContentEntityForm {
 
     // removing the repeated label.
     $form['url']['widget'][0]['#title'] = '';
+    // /Link Text/Title/g
+    $form['url']['widget'][0]['title']['#title'] = $this->t('Title');
+
 
     return $form;
   }
