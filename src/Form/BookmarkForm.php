@@ -118,6 +118,11 @@ class BookmarkForm extends ContentEntityForm {
     // /Link Text/Title/g
     $form['url']['widget'][0]['title']['#title'] = $this->t('Title');
 
+    // Removing this part of the help text:
+    // "Enter <front> to link to the front page."
+    $description = $form['url']['widget'][0]['uri']['#description'];
+    $description = str_replace('Enter <em class="placeholder">&lt;front&gt;</em> to link to the front page.', "" , (string) $description);
+    $form['url']['widget'][0]['uri']['#description'] = $this->t($description);
 
     return $form;
   }

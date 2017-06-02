@@ -189,7 +189,7 @@ class Bookmark extends ContentEntityBase implements BookmarkInterface {
 
     $fields['url'] = BaseFieldDefinition::create('link')
       ->setLabel(t('Url'))
-      ->setDescription(t('The url of the Bookmark.'))
+      ->setDescription(t('The name of the page or site.'))
       ->setSettings([
         'max_length' => 50,
         'text_processing' => 0,
