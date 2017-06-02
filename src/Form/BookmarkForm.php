@@ -113,6 +113,9 @@ class BookmarkForm extends ContentEntityForm {
       $form['actions']['submit']['#submit'] = ['::noAjaxSubmit'];
     }
 
+    // removing the repeated label.
+    $form['url']['widget'][0]['#title'] = '';
+
     return $form;
   }
 
@@ -176,6 +179,14 @@ class BookmarkForm extends ContentEntityForm {
     $response->addCommand(new ReplaceCommand('[data-bookmark-entity-id="' . $this->targetEntity->id() . '"]', $link));
     $response->addCommand(new CloseModalDialogCommand());
     return $response;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    parent::validateForm($form, $form_state);
+    // @todo make sure that the uri field is mandatory.
   }
 
 }

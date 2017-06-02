@@ -194,7 +194,6 @@ class Bookmark extends ContentEntityBase implements BookmarkInterface {
         'max_length' => 50,
         'text_processing' => 0,
       ])
-      ->setRequired(TRUE)
       ->setDefaultValue('')
       ->setDisplayOptions('view', [
         'label' => 'above',
