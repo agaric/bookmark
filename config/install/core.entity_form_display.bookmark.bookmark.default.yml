@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - bookmark.bookmark_type.bookmark
+    - field.field.bookmark.bookmark.field_folder
+  module:
+    - link
+id: bookmark.bookmark.default
+targetEntityType: bookmark
+bundle: bookmark
+mode: default
+content:
+  field_folder:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  name:
+    type: string_textfield
+    weight: -4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  url:
+    type: link_default
+    weight: -4
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+hidden: {  }
