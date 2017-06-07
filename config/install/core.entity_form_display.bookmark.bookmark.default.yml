@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - bookmark.bookmark_type.bookmark
-    - field.field.bookmark.bookmark.field_folder
+    - field.field.bookmark.bookmark.field_bookmark_folder
   module:
     - link
 id: bookmark.bookmark.default
@@ -11,7 +11,7 @@ targetEntityType: bookmark
 bundle: bookmark
 mode: default
 content:
-  field_folder:
+  field_bookmark_folder:
     weight: 3
     settings: {  }
     third_party_settings: {  }
