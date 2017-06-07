@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Bookmark folder'
+vid: bookmark_folder
+description: 'Categories for your bookmarks.'
+hierarchy: 0
+weight: 0
