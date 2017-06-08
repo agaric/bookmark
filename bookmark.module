@@ -99,12 +99,12 @@ function bookmark_entity_view(array &$build, EntityInterface $entity, EntityView
     $build['#cache']['tags'] = [];
   }
 
-  // Get all possible bookmarks for this entity type.
+  // Get all possible bookmark types for this entity type.
   /** @var \Drupal\bookmark\BookmarkService $bookmark_service */
   $bookmark_service = \Drupal::service('bookmark');
-  $bookmarks = $bookmark_service->getAllBookmarkTypes($entity->bundle());
+  $bookmark_types = $bookmark_service->getAllBookmarkTypes($entity->bundle());
 
-  foreach ($bookmarks as $bookmark) {
-    $build['bookmark_' . $bookmark->id() . $bookmark->getEntityTypeId()] = $bookmark_service->generateLink($bookmark, $entity);
+  foreach ($bookmark_types as $bookmark_type) {
+    $build['bookmark_' . $bookmark_type->id()] = $bookmark_service->generateLink($bookmark_type, $entity);
   }
 }
