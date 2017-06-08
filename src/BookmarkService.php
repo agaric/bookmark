@@ -94,7 +94,7 @@ class BookmarkService implements BookmarkServiceInterface {
       '#title' => $bookmarkType->getLinkText(),
       '#url' => $url,
       '#attributes' => [
-        'class' => ['use-ajax'],
+        'class' => ['use-ajax', 'content--action', 'content--action--bookmark'],
         'data-bookmark-entity-id' => $entity->id(),
         'data-dialog-type' => 'modal',
         'data-dialog-options' => json_encode([
@@ -123,7 +123,7 @@ class BookmarkService implements BookmarkServiceInterface {
       '#title' => 'Remove from my bookmarks',
       '#url' => $url,
       '#attributes' => [
-        'class' => ['use-ajax'],
+        'class' => ['use-ajax', 'content--action', 'content--action--bookmark-delete'],
         'data-bookmark-entity-id' => $entity->id(),
       ],
       '#attached' => [
