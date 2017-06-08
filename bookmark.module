@@ -64,15 +64,15 @@ function bookmark_theme_suggestions_bookmark(array $variables) {
  * Implements hook_entity_extra_field_info().
  */
 function bookmark_entity_extra_field_info() {
-  $bookmarks = \Drupal::service('bookmark')->getAllBookmarkTypes();
+  $bookmark_types = \Drupal::service('bookmark')->getAllBookmarkTypes();
   $extra = [];
-  foreach ($bookmarks as $bookmark) {
+  foreach ($bookmark_types as $bookmark_type) {
     /** @var \Drupal\bookmark\Entity\BookmarkTypeInterface $bookmark */
-    $bundles = $bookmark->getApplicableBundles();
+    $bundles = $bookmark_type->getApplicableBundles();
     foreach ($bundles as $bundle) {
-      $extra['node'][$bundle]['display']['bookmark_' . $bookmark->id()] = [
+      $extra['node'][$bundle]['display']['bookmark_' . $bookmark_type->id()] = [
         'label' => t('Bookmark: %title', [
-          '%title' => $bookmark->label(),
+          '%title' => $bookmark_type->label(),
         ]),
         'description' => t('Bookmark link'),
         'weight' => 10,
