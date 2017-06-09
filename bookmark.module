@@ -105,7 +105,8 @@ function bookmark_entity_view(array &$build, EntityInterface $entity, EntityView
   $bookmark_types = $bookmark_service->getAllBookmarkTypes($entity->bundle());
 
   foreach ($bookmark_types as $bookmark_type) {
-    if ($display->getComponent('bookmark_' . $bookmark_type->id())) {
+    $access = \Drupal::entityManager()->getAccessControlHandler('bookmark')->createAccess($bookmark_type->id(), NULL, [], TRUE);
+    if ($access->isAllowed() && $display->getComponent('bookmark_' . $bookmark_type->id())) {
       $build['bookmark_' . $bookmark_type->id()] = $bookmark_service->generateLink($bookmark_type, $entity);
     }
   }
