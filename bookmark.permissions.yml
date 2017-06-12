@@ -1,25 +1,32 @@
-add bookmark entities:
-  title: 'Create new bookmark entities'
+add any bookmark:
+  title: 'Create new bookmarks'
 
-administer bookmark entities:
-  title: 'Administer bookmark entities'
-  description: 'Allow to access the administration form to configure bookmark entities.'
+administer bookmarks:
+  title: 'Administer bookmarks'
+  description: 'Allow to access the administration form to configure the bookmarks.'
   restrict access: true
 
-delete bookmark entities:
+delete any bookmarks:
   title: 'Delete bookmark entities'
 
-edit bookmark entities:
+delete own bookmarks:
+  title: 'Delete own bookmark entities'
+
+edit any bookmarks:
   title: 'Edit bookmark entities'
+
+edit own bookmarks:
+  title: 'Edit own bookmark entities'
 
 access bookmark overview:
   title: 'Access the bookmark overview page'
 
-view published bookmark entities:
+view own bookmark entities:
   title: 'View published bookmark entities'
-
-view unpublished bookmark entities:
-  title: 'View unpublished bookmark entities'
 
 view other users bookmarks:
   title: 'Access other users bookmarks'
+
+# In case we need a more granular permissions.
+#permission_callbacks:
+#  - \Drupal\bookmark\BookmarkPermissions::bookmarkTypePermissions
