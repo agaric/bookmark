@@ -22,10 +22,10 @@ access bookmark overview:
   title: 'Access the bookmark overview page'
 
 view own bookmark entities:
-  title: 'View published bookmark entities'
+  title: 'View own bookmark'
 
 view other users bookmarks:
-  title: 'Access other users bookmarks'
+  title: 'View any bookmarks'
 
 # In case we need a more granular permissions.
 #permission_callbacks:

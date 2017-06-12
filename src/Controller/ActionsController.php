@@ -4,11 +4,13 @@ namespace Drupal\bookmark\Controller;
 
 use Drupal\bookmark\BookmarkServiceInterface;
 use Drupal\bookmark\Entity\Bookmark;
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Link;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
@@ -167,6 +169,23 @@ class ActionsController extends ControllerBase {
         '#weight' => 10,
       ],
     ];
+  }
+
+  /**
+   * Check if the user can see the bookmark's page.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $account
+   * @param \Drupal\user\Entity\User $user
+   *
+   * @return \Drupal\Core\Access\AccessResult
+   */
+  public function userBookmarksAccess(AccountInterface $account, User $user) {
+    if ($user->id() == $account->id()) {
+      return AccessResult::allowedIf($account->hasPermission('view own bookmark entities'));
+    } else {
+      return AccessResult::allowedIf($account->hasPermission('view other users bookmarks'));
+    }
+
   }
 
 }

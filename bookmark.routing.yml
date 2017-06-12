@@ -20,7 +20,7 @@ bookmark.actions_controller_user_bookmarks:
     _controller: '\Drupal\bookmark\Controller\ActionsController::userBookmarks'
     _title: 'My Bookmarks'
   requirements:
-    _permission: 'Access other users bookmarks'
+    _custom_access:  '\Drupal\bookmark\Controller\ActionsController::userBookmarksAccess'
   options:
     parameters:
       user:
