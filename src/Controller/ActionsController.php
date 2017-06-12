@@ -158,7 +158,10 @@ class ActionsController extends ControllerBase {
       $url = $bookmark->get('url')->getValue();
       $content[$key]['bookmark'] = $bookmark;
       $content[$key]['link'] = Link::fromTextAndUrl($bookmark->label(), Url::fromUri($url[0]['uri']));
-      $content[$key]['delete'] = Link::createFromRoute('Delete', 'bookmark.actions_controller_delete_link', ['bookmark_id' => $bookmark->id()]);
+      // Only allow the delete action if the user is owner of the bookmark.
+      if ($this->currentUser->id() == $bookmark->get('uid')->getValue()) {
+        $content[$key]['delete'] = Link::createFromRoute('Delete', 'bookmark.actions_controller_delete_link', ['bookmark_id' => $bookmark->id()]);
+      }
     }
 
     return [

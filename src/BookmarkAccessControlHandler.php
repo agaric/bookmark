@@ -40,6 +40,11 @@ class BookmarkAccessControlHandler extends EntityAccessControlHandler {
   }
 
   public function createAccess($entity_bundle = NULL, AccountInterface $account = NULL, array $context = [], $return_as_object = FALSE) {
+    // if account is null, lets get the current drupal user.
+    if ($account == null) {
+      $account = \Drupal::currentUser();
+    }
+
     // @todo expand this check to consider all the bookmark types.
     if ($account->hasPermission('add bookmark')) {
       $result = AccessResult::allowed()->cachePerPermissions();
