@@ -2,16 +2,16 @@
 
 namespace Drupal\bookmark\Controller;
 
-use Drupal\bookmark\entity\Bookmark;
 use Drupal\bookmark\BookmarkServiceInterface;
+use Drupal\bookmark\Entity\Bookmark;
 use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
+use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Link;
+use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
-use Drupal\Core\Ajax\ReplaceCommand;
-use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Session\AccountProxy;
 use Drupal\user\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
