@@ -4,6 +4,7 @@ namespace Drupal\bookmark;
 
 use Drupal\bookmark\Entity\BookmarkTypeInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
 
 /**
  * Interface BookmarkServiceInterface.
@@ -52,11 +53,13 @@ interface BookmarkServiceInterface {
    *   BookmarkType Object.
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity where this link will be displayed.
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   The current user.
    *
    * @return array
    *   Return a rendereable array with the link.
    */
-  public function generateLink(BookmarkTypeInterface $bookmarkType, EntityInterface $entity);
+  public function generateLink(BookmarkTypeInterface $bookmarkType, EntityInterface $entity, AccountInterface $account);
 
   /**
    * Generate a link to remove the bookmark.

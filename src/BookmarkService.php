@@ -5,6 +5,7 @@ namespace Drupal\bookmark;
 use Drupal\bookmark\Entity\BookmarkTypeInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 
 /**
@@ -67,10 +68,11 @@ class BookmarkService implements BookmarkServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function generateLink(BookmarkTypeInterface $bookmarkType, EntityInterface $entity) {
+  public function generateLink(BookmarkTypeInterface $bookmarkType, EntityInterface $entity, AccountInterface $account) {
     $bookmarks = $this->entityTypeManager->getStorage('bookmark')->getQuery();
     $bookmarks->condition('url__uri', 'entity:node/' . $entity->id());
     $bookmarks->condition('type', $bookmarkType->id());
+    $bookmarks->condition('uid', $account->id());
     $ids = $bookmarks->execute();
 
     if (!empty($ids)) {
