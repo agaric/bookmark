@@ -39,7 +39,7 @@ use Drupal\user\UserInterface;
  *   base_table = "bookmark",
  *   data_table = "bookmark_field_data",
  *   translatable = TRUE,
- *   admin_permission = "administer bookmark entities",
+ *   admin_permission = "administer bookmark",
  *   entity_keys = {
  *     "id" = "id",
  *     "bundle" = "type",

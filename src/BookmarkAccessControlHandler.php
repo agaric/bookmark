@@ -19,29 +19,35 @@ class BookmarkAccessControlHandler extends EntityAccessControlHandler {
    */
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
     /** @var \Drupal\bookmark\Entity\BookmarkInterface $entity */
+    $uid = $entity->getOwnerId();
     switch ($operation) {
       case 'view':
-        if (!$entity->isPublished()) {
-          return AccessResult::allowedIfHasPermission($account, 'view unpublished bookmark entities');
-        }
-        return AccessResult::allowedIfHasPermission($account, 'view published bookmark entities');
+        return AccessResult::allowedIfHasPermission($account, 'view other users bookmarks');
 
       case 'update':
-        return AccessResult::allowedIfHasPermission($account, 'edit bookmark entities');
+        return AccessResult::allowedIfHasPermission($account, 'edit any bookmarks');
 
       case 'delete':
-        return AccessResult::allowedIfHasPermission($account, 'delete bookmark entities');
+        if ($uid == $account->id()) {
+          return AccessResult::allowedIfHasPermission($account, 'delete own bookmarks');
+        } else {
+          return AccessResult::allowedIfHasPermission($account, 'delete any bookmarks');
+        }
     }
 
     // Unknown operation, no opinion.
     return AccessResult::neutral();
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-    return AccessResult::allowedIfHasPermission($account, 'add bookmark entities');
+  public function createAccess($entity_bundle = NULL, AccountInterface $account = NULL, array $context = [], $return_as_object = FALSE) {
+    // @todo expand this check to consider all the bookmark types.
+    if ($account->hasPermission('add bookmark')) {
+      $result = AccessResult::allowed()->cachePerPermissions();
+      return $return_as_object ? $result : $result->isAllowed();
+    }
+
+    $result = parent::createAccess($entity_bundle, $account, $context, TRUE)->cachePerPermissions();
+    return $return_as_object ? $result : $result->isAllowed();
   }
 
 }
