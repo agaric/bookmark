@@ -191,4 +191,28 @@ class ActionsController extends ControllerBase {
 
   }
 
+  /**
+   * Check if the user can delete the bookmark.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $account
+   * @param \Drupal\user\Entity\User $user
+   *
+   * @return \Drupal\Core\Access\AccessResult
+   */
+  public function linkDeleteAccess(AccountInterface $account, $bookmark_id) {
+    // @todo I think that this check is unnecessary, the same check is already
+    // done in at the BookmarkAccessControlHandler.
+    if (($bookmark = Bookmark::load($bookmark_id)) == NULL) {
+      drupal_set_message('The bookmark does not exists.', ['warning']);
+      return AccessResult::neutral();
+    }
+
+    if ($this->currentUser->id() != $bookmark->getOwnerId()) {
+      return AccessResult::allowedIf($account->hasPermission('delete any bookmarks'));
+    } else {
+      return AccessResult::allowedIf($account->hasPermission('delete own bookmarks'));
+    }
+
+  }
+
 }

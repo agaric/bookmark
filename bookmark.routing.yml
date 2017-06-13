@@ -4,7 +4,7 @@ bookmark.actions_controller_delete:
     _controller: '\Drupal\bookmark\Controller\ActionsController::ajaxLinkDelete'
     _title: 'delete'
   requirements:
-    _permission: 'Delete bookmark entities'
+    _custom_access:  '\Drupal\bookmark\Controller\ActionsController::linkDeleteAccess'
 
 bookmark.actions_controller_my_bookmarks:
   path: '/my-bookmarks'
@@ -12,7 +12,7 @@ bookmark.actions_controller_my_bookmarks:
     _controller: '\Drupal\bookmark\Controller\ActionsController::myBookmarks'
     _title: 'My Bookmarks'
   requirements:
-    _permission: 'Access the bookmark overview page'
+    _permission: 'access bookmark overview'
 
 bookmark.actions_controller_user_bookmarks:
   path: '/user/{user}/bookmarks'
@@ -32,4 +32,4 @@ bookmark.actions_controller_delete_link:
     _controller: '\Drupal\bookmark\Controller\ActionsController::linkDelete'
     _title: 'My Bookmarks'
   requirements:
-    _permission: 'Delete bookmark entities'
+    _custom_access:  '\Drupal\bookmark\Controller\ActionsController::linkDeleteAccess'
