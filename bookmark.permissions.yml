@@ -7,21 +7,21 @@ administer bookmarks:
   restrict access: true
 
 delete any bookmarks:
-  title: 'Delete bookmark entities'
+  title: 'Delete any bookmark'
 
 delete own bookmarks:
-  title: 'Delete own bookmark entities'
+  title: 'Delete only own bookmarks'
 
 edit any bookmarks:
-  title: 'Edit bookmark entities'
+  title: 'Edit any bookmark'
 
 edit own bookmarks:
-  title: 'Edit own bookmark entities'
+  title: 'Edit only own bookmarks'
 
 access bookmark overview:
   title: 'Access the bookmark overview page'
 
-view own bookmark entities:
+view own bookmarks:
   title: 'View own bookmark'
 
 view other users bookmarks:
