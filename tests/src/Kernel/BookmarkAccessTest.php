@@ -8,6 +8,7 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\simpletest\ContentTypeCreationTrait;
 use Drupal\simpletest\NodeCreationTrait;
 use Drupal\simpletest\UserCreationTrait;
+use Drupal\user\RoleInterface;
 
 class BookmarkAccessTest extends KernelTestBase {
 
@@ -32,6 +33,9 @@ class BookmarkAccessTest extends KernelTestBase {
     'system',
     'datetime',
     'user',
+    'field',
+    'text',
+    'link',
   ];
 
   /**
@@ -66,6 +70,7 @@ class BookmarkAccessTest extends KernelTestBase {
    * Run basic tests for bookmark_access function.
    */
   public function testBookmarkAccess() {
+    $this->assertTrue($this->createBookmarkType() instanceof BookmarkType);
     $this->assertTrue(TRUE, 'This is true');
   }
 
@@ -111,6 +116,14 @@ class BookmarkAccessTest extends KernelTestBase {
    *  The created bookmark type.
    */
   protected function createBookmarkType(array $settings = []) {
+
+    $settings += [
+      'id' => $this->randomMachineName(8),
+      'label' => $this->randomMachineName(8),
+      'link_text' => $this->randomMachineName(8),
+      'bundles' => ['page'],
+    ];
+
     $bookmarkType = BookmarkType::create($settings);
     return $bookmarkType;
   }
