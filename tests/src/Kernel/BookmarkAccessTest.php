@@ -47,12 +47,17 @@ class BookmarkAccessTest extends KernelTestBase {
   protected $bookmarkType;
 
   /**
-   * @var \Drupal\user\Entity\User
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $admin;
+
+  /**
+   * @var \Drupal\Core\Session\AccountInterface
    */
   protected $userAccessOwnBookmarks;
 
   /**
-   * @var \Drupal\user\Entity\User
+   * @var \Drupal\Core\Session\AccountInterface
    */
   protected $userAccessAnyBookmarks;
 
@@ -78,7 +83,7 @@ class BookmarkAccessTest extends KernelTestBase {
     $this->bookmarkType = $this->createBookmarkType();
 
     // Create user 1 who has special permissions.
-    $this->drupalCreateUser();
+    $this->admin = $this->drupalCreateUser([], [], TRUE);
 
     // Create user that can only edit/delete/view it's own bookmarks.
     $this->userAccessOwnBookmarks = $this->drupalCreateUser([
@@ -144,6 +149,19 @@ class BookmarkAccessTest extends KernelTestBase {
       'view' => FALSE,
       'delete' => FALSE,
     ], $bookmark2, $this->userAccessAnyBookmarks);
+
+    // Check that the admin is not restricted by the permissions.
+    $this->assertBookmarkAccess([
+      'update' => TRUE,
+      'view' => TRUE,
+      'delete' => TRUE,
+    ], $bookmark1, $this->admin);
+
+    $this->assertBookmarkAccess([
+      'update' => TRUE,
+      'view' => TRUE,
+      'delete' => TRUE,
+    ], $bookmark2, $this->admin);
   }
 
   /**
