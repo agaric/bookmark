@@ -24,7 +24,7 @@ access bookmark overview:
 view own bookmarks:
   title: 'View own bookmark'
 
-view other users bookmarks:
+view any bookmarks:
   title: 'View any bookmarks'
 
 # In case we need a more granular permissions.

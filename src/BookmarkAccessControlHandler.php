@@ -22,11 +22,18 @@ class BookmarkAccessControlHandler extends EntityAccessControlHandler {
     $uid = $entity->getOwnerId();
     switch ($operation) {
       case 'view':
-        return AccessResult::allowedIfHasPermission($account, 'view other users bookmarks');
+        if ($uid == $account->id()) {
+          return AccessResult::allowedIfHasPermission($account, 'view own bookmarks');
+        } else {
+          return AccessResult::allowedIfHasPermission($account, 'view any bookmarks');
+        }
 
       case 'update':
-        return AccessResult::allowedIfHasPermission($account, 'edit any bookmarks');
-
+        if ($uid == $account->id()) {
+          return AccessResult::allowedIfHasPermission($account, 'edit own bookmarks');
+        } else {
+          return AccessResult::allowedIfHasPermission($account, 'edit any bookmarks');
+        }
       case 'delete':
         if ($uid == $account->id()) {
           return AccessResult::allowedIfHasPermission($account, 'delete own bookmarks');

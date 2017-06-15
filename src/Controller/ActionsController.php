@@ -186,7 +186,7 @@ class ActionsController extends ControllerBase {
     if ($user->id() == $account->id()) {
       return AccessResult::allowedIf($account->hasPermission('view own bookmarks'));
     } else {
-      return AccessResult::allowedIf($account->hasPermission('view other users bookmarks'));
+      return AccessResult::allowedIf($account->hasPermission('view any bookmarks'));
     }
 
   }
