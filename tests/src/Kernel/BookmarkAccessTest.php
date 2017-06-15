@@ -215,8 +215,7 @@ class BookmarkAccessTest extends KernelTestBase {
    */
   public function assertBookmarkAccess(array $ops, BookmarkInterface $bookmark, AccountInterface $account) {
     foreach ($ops as $op => $result) {
-      $this->assertEquals($result, $this->accessHandler->access($bookmark, $op, $account), $this->bookmarkAccessAssertMessage($op, $result, $bookmark->language()
-        ->getId()));
+      $this->assertEquals($result, $this->accessHandler->access($bookmark, $op, $account), $this->bookmarkAccessAssertMessage($op, $result));
     }
   }
 
