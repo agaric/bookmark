@@ -8,8 +8,6 @@ use Drupal\bookmark\Entity\BookmarkType;
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\simpletest\ContentTypeCreationTrait;
-use Drupal\simpletest\NodeCreationTrait;
 use Drupal\simpletest\UserCreationTrait;
 use Drupal\user\RoleInterface;
 
@@ -20,21 +18,9 @@ class BookmarkAccessTest extends KernelTestBase {
     createRole as drupalCreateRole;
     createAdminRole as drupalCreateAdminRole;
   }
-
-  use NodeCreationTrait {
-    getNodeByTitle as drupalGetNodeByTitle;
-    createNode as drupalCreateNode;
-  }
-
-  use ContentTypeCreationTrait {
-    createContentType as drupalCreateContentType;
-  }
-
   public static $modules = [
     'bookmark',
-    'node',
     'system',
-    'datetime',
     'user',
     'field',
     'text',
@@ -69,9 +55,7 @@ class BookmarkAccessTest extends KernelTestBase {
 
     $this->installSchema('system', 'sequences');
     $this->installEntitySchema('user');
-    $this->installEntitySchema('node');
     $this->installEntitySchema('bookmark');
-    $this->installConfig('node');
     $this->accessHandler = $this->container->get('entity_type.manager')
       ->getAccessControlHandler('bookmark');
     // Clear permissions for authenticated users.
@@ -96,13 +80,6 @@ class BookmarkAccessTest extends KernelTestBase {
       'delete any bookmarks',
       'edit any bookmarks',
       'view any bookmarks',
-    ]);
-
-    // Create a node type.
-    $this->drupalCreateContentType([
-      'type' => 'page',
-      'name' => 'Basic page',
-      'display_submitted' => FALSE,
     ]);
   }
 
@@ -168,13 +145,13 @@ class BookmarkAccessTest extends KernelTestBase {
    * Creates a bookmark based on default settings.
    *
    * @param array $settings
-   *   (optional) An associative array of settings for the node, as used in
+   *   (optional) An associative array of settings for the bookmark, as used in
    *   entity_create(). Override the defaults by specifying the key and value
    *   in the array, for example:
    *   @code
-   *     $this->drupalCreateNode(array(
-   *       'title' => t('Hello, world!'),
-   *       'type' => 'article',
+   *     $this->createBookmark(array(
+   *       'url' =>  ['title' => t('Hello, world!'), 'uri' => 'http://www.google.com'],
+   *       'type' => 'bookmark type',
    *     ));
    *   @endcode
    *   The following defaults are provided:
@@ -215,7 +192,7 @@ class BookmarkAccessTest extends KernelTestBase {
       'id' => $this->randomMachineName(8),
       'label' => $this->randomMachineName(8),
       'link_text' => $this->randomMachineName(8),
-      'bundles' => ['page'],
+      'bundles' => [],
     ];
 
     $bookmarkType = BookmarkType::create($settings);
@@ -244,27 +221,22 @@ class BookmarkAccessTest extends KernelTestBase {
   }
 
   /**
-   * Constructs an assert message to display which node access was tested.
+   * Constructs an assert message to display which bookmark access was tested.
    *
    * @param string $operation
    *   The operation to check access for.
    * @param bool $result
    *   Whether access should be granted or not.
-   * @param string|null $langcode
-   *   (optional) The language code indicating which translation of the node
-   *   to check. If NULL, the untranslated (fallback) access is checked.
-   *
    * @return string
    *   An assert message string which contains information in plain English
-   *   about the node access permission test that was performed.
+   *   about the bookmark access permission test that was performed.
    */
-  public function bookmarkAccessAssertMessage($operation, $result, $langcode = NULL) {
+  public function bookmarkAccessAssertMessage($operation, $result) {
     return new FormattableMarkup(
-      'Bookmark access returns @result with operation %op, language code %langcode.',
+      'Bookmark access returns @result with operation %op.',
       [
         '@result' => $result ? 'true' : 'false',
         '%op' => $operation,
-        '%langcode' => !empty($langcode) ? $langcode : 'empty',
       ]
     );
   }
