@@ -183,7 +183,7 @@ class Bookmark extends ContentEntityBase implements BookmarkInterface {
       ->setLabel(t('Name'))
       ->setDescription(t('The name of the Bookmark entity.'))
       ->setSettings([
-        'max_length' => 50,
+        'max_length' => 250,
         'text_processing' => 0,
       ]);
 
@@ -191,7 +191,7 @@ class Bookmark extends ContentEntityBase implements BookmarkInterface {
       ->setLabel(t('Url'))
       ->setDescription(t('The name of the page or site.'))
       ->setSettings([
-        'max_length' => 50,
+        'max_length' => 250,
         'text_processing' => 0,
       ])
       ->setDefaultValue('')
