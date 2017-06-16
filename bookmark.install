@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * Extend the max_limit to 250 in the name field in the bookmark entity.
+ */
+function bookmark_update_update_8001() {
+  // Update the schema.
+  $field_table = 'bookmark_field_data';
+  $field_column = 'name';
+  $new_length = 255;
+
+  // Alter value field length in fields table
+  db_query("ALTER TABLE `{$field_table}` CHANGE `{$field_column}` `{$field_column}` VARCHAR( {$new_length} ) DEFAULT NULL");
+
+  // Update the field definition.
+  $manager = \Drupal::entityDefinitionUpdateManager();
+  $manager->updateEntityType($manager->getEntityType('bookmark'));
+  /** @var \Drupal\Core\Field\BaseFieldDefinition $name_field_definition */
+  $name_field_definition = $manager->getFieldStorageDefinition('name', 'bookmark');
+  $name_field_definition->setSetting('max_length', $new_length);
+  $manager->updateFieldStorageDefinition($name_field_definition);
+
+}
