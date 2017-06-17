@@ -10,7 +10,7 @@ function bookmark_update_8001() {
   $new_length = 255;
 
   // Alter value field length in fields table
-  db_query("ALTER TABLE `{$field_table}` CHANGE `{$field_column}` `{$field_column}` VARCHAR( {$new_length} ) DEFAULT NULL");
+  db_query("ALTER TABLE `{$field_table}` CHANGE `{$field_column}` `{$field_column}` VARCHAR({$new_length}) DEFAULT NULL");
 
   // Update the field definition.
   $manager = \Drupal::entityDefinitionUpdateManager();
