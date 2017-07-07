@@ -41,6 +41,9 @@ function bookmark_theme() {
     'render element' => 'content',
     'variables' => ['content' => NULL],
   ];
+  $theme['bookmark_link'] = [
+    'variables' => ['link' => NULL],
+  ];
   return $theme;
 }
 

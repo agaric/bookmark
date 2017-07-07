@@ -111,7 +111,10 @@ class BookmarkService implements BookmarkServiceInterface {
         ],
       ],
     ];
-    return $build;
+    return [
+      '#theme' => 'bookmark_link',
+      '#link' => $build,
+    ];
   }
 
   /**
@@ -135,7 +138,10 @@ class BookmarkService implements BookmarkServiceInterface {
       ],
     ];
 
-    return $build;
+    return [
+      '#theme' => 'bookmark_link',
+      '#link' => $build,
+    ];
   }
 
 }
