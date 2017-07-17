@@ -5,6 +5,7 @@ namespace Drupal\bookmark\Form;
 use Drupal\bookmark\BookmarkServiceInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
+use Drupal\Core\Ajax\OpenModalDialogCommand;
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\EntityInterface;
@@ -79,8 +80,6 @@ class BookmarkForm extends ContentEntityForm {
   public function buildForm(array $form, FormStateInterface $form_state) {
     /* @var $entity \Drupal\bookmark\Entity\Bookmark */
     $form = parent::buildForm($form, $form_state);
-
-    $entity = $this->entity;
     $query_string = $this->requestStack->getCurrentRequest()->getQueryString();
     $query = [];
     if (!empty($query_string)) {
@@ -163,7 +162,8 @@ class BookmarkForm extends ContentEntityForm {
     $this->submitForm($form, $form_state);
     if ($this->save($form, $form_state)) {
       drupal_set_message($this->t("The @bookmark_bundle has been saved correctly", ['@bookmark_bundle' => $this->entity->bundle()]));
-    } else {
+    }
+    else {
       drupal_set_message($this->t("There was a problem, please try again later."));
     }
     $form_state->setRedirect('entity.bookmark.collection');
@@ -183,9 +183,28 @@ class BookmarkForm extends ContentEntityForm {
   public function ajaxSubmit(array &$form, FormStateInterface $form_state) {
     $this->save($form, $form_state);
     $response = new AjaxResponse();
-    $link = $this->bookmarkService->generateDeleteLink($this->entity->id(), $this->targetEntity);
-    $response->addCommand(new ReplaceCommand('[data-bookmark-entity-id="' . $this->targetEntity->id() . '"]', $link));
-    $response->addCommand(new CloseModalDialogCommand());
+
+    // If an entity was bookmarked replace the "add link" with a
+    // link to remove it from the bookmarks.
+    if ($this->targetEntity instanceof  EntityInterface) {
+      $link = $this->bookmarkService->generateDeleteLink($this->entity->id(), $this->targetEntity);
+      $response->addCommand(new ReplaceCommand('[data-bookmark-entity-id="' . $this->targetEntity->id() . '"]', $link));
+      $response->addCommand(new CloseModalDialogCommand());
+    }
+    else {
+      // If is a external link just display a message that it was saved
+      // correctly.
+      $message_list = [
+        'status' => [
+          'The link has been saved.',
+        ],
+      ];
+      $message = [
+        '#theme' => 'status_messages',
+        '#message_list' => $message_list,
+      ];
+      $response->addCommand(new OpenModalDialogCommand('', $message, ['height' => 140]));
+    }
     return $response;
   }
 

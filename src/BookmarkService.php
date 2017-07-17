@@ -87,17 +87,22 @@ class BookmarkService implements BookmarkServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function generateAddLink(BookmarkTypeInterface $bookmarkType, EntityInterface $entity) {
+  public function generateAddLink(BookmarkTypeInterface $bookmarkType, EntityInterface $entity = NULL) {
     /** @var \Drupal\Core\Url $url */
     $url = Url::fromRoute('entity.bookmark.add_form', ['bookmark_type' => $bookmarkType->id()]);
-    $url->setOption('query', ['entity_id' => $entity->id(), 'use_ajax' => 1]);
+    $query = ['use_ajax' => 1];
+    if (!is_null($entity)) {
+      $query['entity_id'] = $entity->id();
+    }
+    $url->setOption('query', $query);
+
     $build = [
       '#type' => 'link',
       '#title' => $bookmarkType->getLinkText(),
       '#url' => $url,
       '#attributes' => [
         'class' => ['use-ajax', 'content--action', 'content--action--bookmark'],
-        'data-bookmark-entity-id' => $entity->id(),
+        'data-bookmark-entity-id' => ($entity instanceof  EntityInterface) ? $entity->id() : "",
         'data-dialog-type' => 'modal',
         'data-dialog-options' => json_encode([
           'width' => 800,

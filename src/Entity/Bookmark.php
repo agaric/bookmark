@@ -78,7 +78,7 @@ class Bookmark extends ContentEntityBase implements BookmarkInterface {
   /**
    * {@inheritdoc}
    */
-  function preSave(EntityStorageInterface $storage) {
+  public function preSave(EntityStorageInterface $storage) {
     parent::preSave($storage);
     $url = $this->get('url')->getValue();
     $name = Url::fromUri($url[0]['uri']);
