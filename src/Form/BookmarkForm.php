@@ -9,6 +9,7 @@ use Drupal\Core\Ajax\OpenModalDialogCommand;
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -95,7 +96,8 @@ class BookmarkForm extends ContentEntityForm {
       $form['url']['widget'][0]['uri']['#attributes']['readonly'] = 'readonly';
     }
 
-    if (isset($query['use_ajax']) && $query['use_ajax']) {
+    $ajax = \Drupal::request()->query->has(FormBuilderInterface::AJAX_FORM_REQUEST);
+    if (isset($query['use_ajax']) && $query['use_ajax'] && $ajax) {
       // Ajax Modal.
       $form['actions']['submit']['#submit'] = [];
       $form['actions']['submit']['#ajax'] = [
@@ -108,7 +110,8 @@ class BookmarkForm extends ContentEntityForm {
         '#submit' => [],
         '#ajax' => ['callback' => '::cancelAjaxSubmit', 'event' => 'click'],
       ];
-    } else {
+    }
+    else {
       $form['actions']['submit']['#submit'] = ['::noAjaxSubmit'];
     }
 

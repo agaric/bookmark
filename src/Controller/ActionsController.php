@@ -155,7 +155,7 @@ class ActionsController extends ControllerBase {
     $bookmarks = $this->bookmarkService->getAllBookmarksByUser($user->id());
     $content = [];
 
-    if (empty($bookmark)) {
+    if (empty($bookmarks)) {
       return [
         '#markup' => "<h3>You don't have any bookmarks yet.  Add one!</h3>",
       ];
