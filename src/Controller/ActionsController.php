@@ -154,6 +154,13 @@ class ActionsController extends ControllerBase {
     // @todo use a view instead of this method.
     $bookmarks = $this->bookmarkService->getAllBookmarksByUser($user->id());
     $content = [];
+
+    if (empty($bookmark)) {
+      return [
+        '#markup' => "<h3>You don't have any bookmarks yet.  Add one!</h3>",
+      ];
+    }
+
     foreach ($bookmarks as $key => $bookmark) {
       $url = $bookmark->get('url')->getValue();
       $content[$key]['bookmark'] = $bookmark;
