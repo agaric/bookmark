@@ -164,10 +164,11 @@ class BookmarkForm extends ContentEntityForm {
   public function noAjaxSubmit(array &$form, FormStateInterface $form_state) {
     $this->submitForm($form, $form_state);
     if ($this->save($form, $form_state)) {
-      drupal_set_message($this->t("The @bookmark_bundle has been saved correctly", ['@bookmark_bundle' => $this->entity->bundle()]));
+      $this->messenger()->addStatus($this->t("The @bookmark_bundle has been saved correctly", ['@bookmark_bundle' => $this->entity->bundle(
+)]));
     }
     else {
-      drupal_set_message($this->t("There was a problem, please try again later."));
+      $this->messenger()->addStatus($this->t("There was a problem, please try again later."));
     }
     $form_state->setRedirect('entity.bookmark.collection');
   }

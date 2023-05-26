@@ -18,7 +18,7 @@ class BookmarkAccessTest extends KernelTestBase {
     createRole as drupalCreateRole;
     createAdminRole as drupalCreateAdminRole;
   }
-  public static $modules = [
+  protected static $modules = [
     'bookmark',
     'system',
     'user',
@@ -50,7 +50,7 @@ class BookmarkAccessTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
 
     $this->installSchema('system', 'sequences');

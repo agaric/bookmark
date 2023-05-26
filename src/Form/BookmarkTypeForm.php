@@ -110,13 +110,13 @@ class BookmarkTypeForm extends EntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Bookmark type.', [
+        $this->messenger()->addStatus($this->t('Created the %label Bookmark type.', [
           '%label' => $bookmark_type->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label Bookmark type.', [
+        $this->messenger()->addStatus($this->t('Saved the %label Bookmark type.', [
           '%label' => $bookmark_type->label(),
         ]));
     }
