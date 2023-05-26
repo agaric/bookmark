@@ -4,7 +4,6 @@ namespace Drupal\bookmark;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
-use Drupal\Core\Routing\LinkGeneratorTrait;
 use Drupal\Core\Url;
 
 /**
@@ -13,8 +12,6 @@ use Drupal\Core\Url;
  * @ingroup bookmark
  */
 class BookmarkListBuilder extends EntityListBuilder {
-
-  use LinkGeneratorTrait;
 
   /**
    * {@inheritdoc}

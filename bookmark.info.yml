@@ -1,4 +1,4 @@
 name: bookmark
 type: module
 description: Bookmark
-core: 8.x
+core_version_requirement: ^8 || ^9 || ^10

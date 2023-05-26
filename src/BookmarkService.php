@@ -48,7 +48,7 @@ class BookmarkService implements BookmarkServiceInterface {
    * {@inheritdoc}
    */
   public function getAllBookmarksByUser($uid) {
-    $query = $this->entityTypeManager->getStorage('bookmark')->getQuery();
+    $query = $this->entityTypeManager->getStorage('bookmark')->getQuery()->accesCheck(TRUE);
     $query->condition('uid', $uid);
     $query->pager();
     $ids = $query->execute();
@@ -69,7 +69,7 @@ class BookmarkService implements BookmarkServiceInterface {
    * {@inheritdoc}
    */
   public function generateLink(BookmarkTypeInterface $bookmarkType, EntityInterface $entity, AccountInterface $account) {
-    $bookmarks = $this->entityTypeManager->getStorage('bookmark')->getQuery();
+    $bookmarks = $this->entityTypeManager->getStorage('bookmark')->getQuery()->accessCheck(TRUE);
     $bookmarks->condition('url__uri', 'entity:node/' . $entity->id());
     $bookmarks->condition('type', $bookmarkType->id());
     $bookmarks->condition('uid', $account->id());

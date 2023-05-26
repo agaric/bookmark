@@ -29,6 +29,10 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *     "label" = "label",
  *     "uuid" = "uuid"
  *   },
+ *   config_export = {
+ *     "id" = "id",
+ *     "label" = "label",
+ *   },
  *   links = {
  *     "canonical" = "/admin/structure/bookmark/{bookmark_type}",
  *     "add-form" = "/admin/structure/bookmark/add",
