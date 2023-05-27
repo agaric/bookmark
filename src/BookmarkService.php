@@ -48,7 +48,7 @@ class BookmarkService implements BookmarkServiceInterface {
    * {@inheritdoc}
    */
   public function getAllBookmarksByUser($uid) {
-    $query = $this->entityTypeManager->getStorage('bookmark')->getQuery()->accesCheck(TRUE);
+    $query = $this->entityTypeManager->getStorage('bookmark')->getQuery()->accessCheck(TRUE);
     $query->condition('uid', $uid);
     $query->pager();
     $ids = $query->execute();
